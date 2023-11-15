@@ -9,10 +9,10 @@ namespace Trollhall
     class Encounters
     {
         static Random rand = new Random();
-        // Encounter Generic
+        // ENCOUNTER GENERIC -------------------------------------------------------------------------- ENCOUNTER GENERIC //
 
 
-        // Encounters
+        // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         public static void FirstEncounter()
         {
             Console.WriteLine("You draw your axe and charge at the troll.");
@@ -23,7 +23,7 @@ namespace Trollhall
         }
 
 
-        // Encounter Tools
+        // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void Combat(bool random, string name, int power, int health)
         {
             string enemyName = "";
@@ -54,38 +54,38 @@ namespace Trollhall
                 string input = Console.ReadLine();
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
-                    // ATTACK
+                    // ATTACK ------------------------------------------------------------------------------------ ATTACK //
+                    int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
+                    if (enemyDmg < 0)
+                        enemyDmg = 0;
+                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4);
+                    enemyHealth -= playerDmg;
+                    Program.currentPlayer.health -= enemyDmg;
                     Console.WriteLine($"You attack the {enemyName}, it strikes back!");
-                    int damage = enemyPower - Program.currentPlayer.armorValue;
-                    if (damage < 0)
-                        damage = 0;
-                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4);
-                    Console.WriteLine($"You take {damage} damage and you deal {attack} damage");
-                    Program.currentPlayer.health -= damage;
-                    enemyHealth -= attack;
+                    Console.WriteLine($"You take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
-                    // DEFEND
+                    // DEFEND ------------------------------------------------------------------------------------ DEFEND //
                     Console.WriteLine($"As the {enemyName} prepares to strike, you hunker behind your shield!");
-                    int damage = (enemyPower / 4) - Program.currentPlayer.armorValue;
-                    if (damage < 0)
-                        damage = 0;
-                    int attack = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
-                    Console.WriteLine($"You take {damage} damage and you deal {attack} damage");
-                    Program.currentPlayer.health -= damage;
-                    enemyHealth -= attack;
+                    int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
+                    if (enemyDmg < 0)
+                        enemyDmg = 0;
+                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
+                    enemyHealth -= playerDmg;
+                    Program.currentPlayer.health -= enemyDmg;
+                    Console.WriteLine($"You take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
-                    // RUN
+                    // RUN ------------------------------------------------------------------------------------------ RUN //
                     if (rand.Next(0, 2) == 0)
                     {
+                        int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
+                        if (enemyDmg < 0)
+                            enemyDmg = 0;
                         Console.WriteLine($"As you attempt to flee the {enemyName}, it's strikes you from behind!");
-                        int damage = enemyPower - Program.currentPlayer.armorValue;
-                        if (damage < 0)
-                            damage = 0;
-                        Console.WriteLine($"You lose {damage} health and are unable to escape!");
+                        Console.WriteLine($"You lose {enemyDmg} health and are unable to escape!");
                         Console.ReadKey();
                     }
                     else
@@ -97,26 +97,26 @@ namespace Trollhall
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
                 {
-                    // HEAL
+                    // HEAL ---------------------------------------------------------------------------------------- HEAL //
                     if (Program.currentPlayer.potions == 0)
                     {
+                        int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
+                        if (enemyDmg < 0)
+                            enemyDmg = 0;
                         Console.WriteLine("You have no potions left!");
-                        int damage = enemyPower - Program.currentPlayer.armorValue;
-                        if (damage < 0)
-                            damage = 0;
-                        Console.WriteLine($"The {enemyName} strikes at you! Dealing {damage} damage!");
+                        Console.WriteLine($"The {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
                     else
                     {
                         int potionValue = 5;
-                        Console.WriteLine($"You drink a potion! You recover {potionValue} health!");
+                        int enemyDmg = enemyPower / 2 - Program.currentPlayer.armorValue;
+                        if (enemyDmg < 0)
+                            enemyDmg = 0;
                         Program.currentPlayer.health += potionValue;
-                        int damage = enemyPower / 2 - Program.currentPlayer.armorValue;
-                        if (damage < 0)
-                            damage = 0;
-                        Console.WriteLine($"The {enemyName} strikes! Dealing {damage} damage!");
+                        Program.currentPlayer.potions--;
+                        Console.WriteLine($"You drink a potion! You recover {potionValue} health!");
+                        Console.WriteLine($"The {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
-                    Console.ReadKey();
                 }
                 Console.ReadKey();
             }
