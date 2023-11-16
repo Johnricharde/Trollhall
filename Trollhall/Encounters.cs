@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,14 +17,38 @@ namespace Trollhall
         public static void FirstEncounter()
         {
             Console.WriteLine("You draw your axe and charge at the troll.");
-            Console.WriteLine("He roars...");
             Console.ReadKey();
             Combat(false, "Troll", 1, 5);
-
+        }
+        public static void TrollWizardEncounter()
+        { 
+            Console.Clear();
+            Console.WriteLine("You encounter a menacing troll shaman!");
+            Console.ReadKey();
+            Combat(false, "Troll Shaman", 4, 3);
+        }
+        public static void basicFightEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine($"You encounter an enemy!");
+            Console.ReadKey();
+            Combat(true, "", 0, 0);
         }
 
 
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
+        public static void RandomEncounter()
+        {
+            switch(rand.Next(0, 2))
+            {
+                case 0:
+                    basicFightEncounter();
+                    break;
+                case 1:
+                    TrollWizardEncounter();
+                    break;
+            }
+        }
         public static void Combat(bool random, string name, int power, int health)
         {
             string enemyName = "";
@@ -31,7 +56,9 @@ namespace Trollhall
             int enemyHealth = 0;
             if (random)
             {
-
+                enemyName = GetName();
+                enemyPower = rand.Next(1, 5);
+                enemyHealth = rand.Next(1, 8);
             }
             else
             {
@@ -118,10 +145,34 @@ namespace Trollhall
                         Console.WriteLine($"The {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
+                if (Program.currentPlayer.health <= 0)
+                {
+                    // Death Code
+                    Console.WriteLine($"You have been slain by the {enemyName}.\nYou are dead...");
+                    Console.ReadKey();
+                    System.Environment.Exit(0);
+                }
                 Console.ReadKey();
             }
+            int coins = rand.Next(10, 50);
+            Console.WriteLine($"You defeat the {enemyName}! You loot {coins} coins!");
+            Program.currentPlayer.coins += coins;
+            Console.ReadKey();
         }
-
-
+        public static string GetName()
+        {
+            switch (rand.Next(0, 4))
+            {
+                case 0:
+                    return "Rock Spider";
+                case 1:
+                    return "Firebeetle";
+                case 2:
+                    return "Giant Bat";
+                case 3:
+                    return "Troll";
+            }
+            return "Beast";
+        }
     }
 }
