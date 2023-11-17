@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Trollhall
 {
-    class Encounters
+    public class Encounters
     {
         static Random rand = new Random();
         // ENCOUNTER GENERIC -------------------------------------------------------------------------- ENCOUNTER GENERIC //
@@ -57,8 +57,8 @@ namespace Trollhall
             if (random)
             {
                 enemyName = GetName();
-                enemyPower = rand.Next(1, 5);
-                enemyHealth = rand.Next(1, 8);
+                enemyPower = Program.currentPlayer.GetPower();
+                enemyHealth = Program.currentPlayer.GetHealth();
             }
             else
             {
@@ -70,14 +70,14 @@ namespace Trollhall
             {
                 Console.Clear();
                 Console.WriteLine($"ENEMY: {enemyName}");
-                Console.WriteLine($"Power: {enemyPower} / Health: {enemyHealth}");
+                Console.WriteLine($"Power: {enemyPower} / Health: {enemyHealth}\n");
                 Console.WriteLine("=======================");
                 Console.WriteLine("| [A]ttack | [D]efend |");
                 Console.WriteLine("| [R]un    | [H]eal   |");
-                Console.WriteLine("=======================");
-                Console.WriteLine($"PLAYER: {Program.currentPlayer.name}");
-                Console.WriteLine($"Health: {Program.currentPlayer.health}");
-                Console.WriteLine($"Potions: {Program.currentPlayer.potions}");
+                Console.WriteLine("=======================\n");
+                Console.WriteLine($"PLAYER:  {Program.currentPlayer.name}");
+                Console.WriteLine($"Health:  {Program.currentPlayer.health}");
+                Console.WriteLine($"Potions: {Program.currentPlayer.potions}\n");
                 string input = Console.ReadLine();
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
@@ -119,7 +119,7 @@ namespace Trollhall
                     {
                         Console.WriteLine($"You evade the {enemyName}'s attack and manage to escape!");
                         Console.ReadKey();
-                        // Go to Store
+                        Shop.LoadShop(Program.currentPlayer);
                     }
                 }
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
@@ -154,7 +154,7 @@ namespace Trollhall
                 }
                 Console.ReadKey();
             }
-            int coins = rand.Next(10, 50);
+            int coins = Program.currentPlayer.GetCoins();
             Console.WriteLine($"You defeat the {enemyName}! You loot {coins} coins!");
             Program.currentPlayer.coins += coins;
             Console.ReadKey();
