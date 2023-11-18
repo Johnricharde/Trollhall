@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,6 +48,7 @@ namespace Trollhall
                 Console.WriteLine($"Difficulty Mod: + {player.difficultyMod}");
                 Console.WriteLine("==========================");
                 Console.WriteLine("[E]xit shop");
+                Console.WriteLine("[Q]uit game");
                 // Wait for input
                 string input = Console.ReadLine().ToLower();
 
@@ -58,6 +60,8 @@ namespace Trollhall
                     TryBuy("potion", potionPrice, player);
                 else if (input == "d" || input == "difficulty")
                     TryBuy("difficulty", difficultyPrice, player);
+                else if (input == "q" || input == "quit")
+                    Program.Quit();
                 else if (input == "e" || input == "exit")
                     break; 
             }
