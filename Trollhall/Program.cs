@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.IO;
 using System.Text.Json;
+using System.Media;
 
 namespace Trollhall
 {
@@ -143,11 +144,14 @@ namespace Trollhall
         }
         public static void Print(string text, int speed = 10)
         {
+            SoundPlayer soundPlayer = new SoundPlayer("./audio/typing.wav");
+            soundPlayer.PlayLooping();
             foreach (char character in text)
             {
                 Console.Write(character);
                 System.Threading.Thread.Sleep(speed);
             }
+            soundPlayer.Stop();
             Console.WriteLine();
         }
     }
