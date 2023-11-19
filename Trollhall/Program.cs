@@ -33,20 +33,20 @@ namespace Trollhall
         {
             Console.Clear();
             Player player = new Player();
-            Console.WriteLine("Halls of Trollhall");
-            Console.WriteLine("Enter your name:");
+            Print("Halls of Trollhall");
+            Print("Enter your name:");
             player.name = Console.ReadLine();
             player.id = id;
             while (player.name == "")
                 player.name = Console.ReadLine();
             Console.Clear();
-            Console.WriteLine("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
-            Console.WriteLine($"Your name is {player.name} and you're a proud dwarf of the city of Fjellheim.");
-            Console.WriteLine("You were sent by King Thorim the heartless to retrieve an ancient ledger deep within these ruined halls.");
+            Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
+            Print($"Your name is {player.name} and you're a proud dwarf of the city of Fjellheim.");
+            Print("You were sent by King Thorim the heartless to retrieve an ancient ledger deep within these ruined halls.");
 
             Console.ReadKey();
             Console.Clear();
-            Console.WriteLine("You encounter a troll!");
+            Print("You encounter a troll!");
             return player;
         }
 
@@ -83,14 +83,14 @@ namespace Trollhall
             while (true)
             {
                 Console.Clear();
-                Console.WriteLine("Choose your player:");
+                Print("Choose your player:");
 
                 foreach (Player player in players)
                 {
-                    Console.WriteLine($"{player.id}: {player.name}");
+                    Print($"{player.id}: {player.name}");
                 }
 
-                Console.WriteLine("Input player name or id (id:# or playername) or\ninput 'create' to create a new character");
+                Print("Input player name or id (id:# or playername) or\ninput 'create' to create a new character");
                 string[] data = Console.ReadLine().Split(':');
 
                 try
@@ -106,12 +106,12 @@ namespace Trollhall
                                     return player;
                                 }
                             }
-                            Console.WriteLine("There is no player with that id");
+                            Print("There is no player with that id");
                             Console.ReadKey();
                         }
                         else
                         {
-                            Console.WriteLine("Your id needs to be a number");
+                            Print("Your id needs to be a number");
                             Console.ReadKey();
                         }
                     }
@@ -130,16 +130,25 @@ namespace Trollhall
                                 return player;
                             }
                         }
-                        Console.WriteLine("There is no player with that name");
+                        Print("There is no player with that name");
                         Console.ReadKey();
                     }
                 }
                 catch (IndexOutOfRangeException)
                 {
-                    Console.WriteLine("Your id needs to be a number");
+                    Print("Your id needs to be a number");
                     Console.ReadKey();
                 }
             }
+        }
+        public static void Print(string text, int speed = 10)
+        {
+            foreach (char character in text)
+            {
+                Console.Write(character);
+                System.Threading.Thread.Sleep(speed);
+            }
+            Console.WriteLine();
         }
     }
 }
