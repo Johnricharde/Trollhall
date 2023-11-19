@@ -22,7 +22,7 @@ namespace Trollhall
             Console.ReadKey();
             Combat(false, "Troll", 1, 5);
         }
-        public static void TrollWizardEncounter()
+        public static void TrollShamanEncounter()
         { 
             Console.Clear();
             Program.Print("You encounter a menacing troll shaman!");
@@ -47,7 +47,7 @@ namespace Trollhall
                     basicFightEncounter();
                     break;
                 case 1:
-                    TrollWizardEncounter();
+                    TrollShamanEncounter();
                     break;
             }
         }

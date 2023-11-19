@@ -67,7 +67,7 @@ namespace Trollhall
                 else if (input == "q" || input == "quit")
                     Program.Quit();
                 else if (input == "e" || input == "exit")
-                    break; 
+                    Encounters.RandomEncounter(); 
             }
         }
         static void TryBuy(string item, int cost, Player player)

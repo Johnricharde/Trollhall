@@ -166,7 +166,7 @@ namespace Trollhall
                 }
             }
         }
-        public static void Print(string text, int speed = 10)
+        public static void Print(string text, int speed = 5)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));
