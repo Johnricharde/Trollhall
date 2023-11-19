@@ -90,7 +90,8 @@ namespace Trollhall
                     attack.Play();
                     if (enemyDmg < 0)
                         enemyDmg = 0;
-                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4);
+                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) +
+                        ((Program.currentPlayer.currentClass == Player.PlayerClass.Soldier) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
                     Program.Print($"You attack the {enemyName}, it strikes back!");
@@ -114,7 +115,7 @@ namespace Trollhall
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
                     // RUN ------------------------------------------------------------------------------------------ RUN //
-                    if (rand.Next(0, 2) == 0)
+                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Hunter && rand.Next(0, 2) == 0)
                     {
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
@@ -146,7 +147,8 @@ namespace Trollhall
                     }
                     else
                     {
-                        int potionValue = 5;
+                        int potionValue = 5 +
+                            ((Program.currentPlayer.currentClass == Player.PlayerClass.Cleric)? + 4 : 0);
                         int enemyDmg = enemyPower / 2 - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;
@@ -169,8 +171,14 @@ namespace Trollhall
                 Console.ReadKey();
             }
             int coins = Program.currentPlayer.GetCoins();
-            Program.Print($"You defeat the {enemyName}! You loot {coins} coins!");
+            int experience = Program.currentPlayer.GetXP();
+            Program.Print($"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
+            Program.currentPlayer.xp += experience;
+            if ( Program.currentPlayer.CanLevelUp() )
+            {
+                Program.currentPlayer.LevelUp();
+            }
             Console.ReadKey();
         }
         public static string GetName()

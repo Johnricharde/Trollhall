@@ -30,6 +30,7 @@ namespace Trollhall
                 difficultyPrice = 300 + 100 * player.difficultyMod;
 
                 Console.Clear();
+                Console.WriteLine("==========================");
                 Console.WriteLine("           SHOP           ");
                 Console.WriteLine("==========================");
                 Console.WriteLine($"GOLD:             {player.coins}\n");
@@ -46,7 +47,10 @@ namespace Trollhall
                 Console.WriteLine($"Weapon Mod:     + {player.weaponValue - 1}");
                 Console.WriteLine($"Armor Mod:      + {player.armorValue}");
                 Console.WriteLine($"Difficulty Mod: + {player.difficultyMod}");
-                Console.WriteLine("==========================");
+                Console.WriteLine($"Level: {player.level}");
+                Console.Write("[");
+                Program.ExperienceBar("+", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
+                Console.WriteLine("]");
                 Console.WriteLine("[E]xit shop");
                 Console.WriteLine("[Q]uit game");
                 // Wait for input

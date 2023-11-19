@@ -8,6 +8,7 @@ using System.IO;
 using System.Text.Json;
 using NAudio.Wave;
 using System.Media;
+using System.Runtime.InteropServices;
 
 namespace Trollhall
 {
@@ -37,12 +38,33 @@ namespace Trollhall
         {
             Console.Clear();
             Player player = new Player();
-            Print("Halls of Trollhall");
             Print("Enter your name:");
             player.name = Console.ReadLine();
             player.id = id;
             while (player.name == "")
                 player.name = Console.ReadLine();
+            Print("Choose a class:");
+            Print("[S]oldiers boast great strength");
+            Print("[H]unters are quick on their feet");
+            Print("[C]lerics recieve great blessings");
+            bool flag = false;
+            while (!flag)
+            {
+                string input = Console.ReadLine().ToLower();
+                flag = true;
+                if (input == "soldier" || input == "s")
+                    player.currentClass = Player.PlayerClass.Soldier;
+                else if (input == "hunter" || input == "h")
+                    player.currentClass = Player.PlayerClass.Hunter;
+                else if (input == "cleric" || input == "c")
+                    player.currentClass = Player.PlayerClass.Cleric;
+                else
+                {
+                    Print("Not a valid class, please choose a class");
+                    flag = false;
+                }
+                
+            }
             Console.Clear();
             Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
             Print($"Your name is {player.name} and you're a proud dwarf of the city of Fjellheim.");
@@ -86,15 +108,15 @@ namespace Trollhall
             while (true)
             {
                 Console.Clear();
-                Print("Choose your player:");
+                Print("Choose your player: (id:'number')");
 
                 foreach (Player player in players)
                 {
-                    Print($"{player.id}: {player.name}");
+                    Print($"[{player.id}]: {player.name}");
                 }
-
-                Print("Input player name or id (id:# or playername) or\ninput 'create' to create a new character");
-                string[] data = Console.ReadLine().Split(':');
+                Console.WriteLine();
+                Print("[C]reate a new character");
+                string[] data = Console.ReadLine().ToLower().Split(':');
 
                 try
                 {
@@ -118,7 +140,7 @@ namespace Trollhall
                             Console.ReadKey();
                         }
                     }
-                    else if (data[0] == "create")
+                    else if (data[0] == "create" || data[0] == "c")
                     {
                         Player newPlayer = NewStart(idCount);
                         isNewPlayer = true;
@@ -157,6 +179,17 @@ namespace Trollhall
             Console.WriteLine();
             typing.Stop();
             typing.Dispose();
+        }
+        public static void ExperienceBar(string fillerChar, decimal value, int size)
+        {
+            int differentiator = (int)(value * size);
+            for (int i = 0; i < size; i++) 
+            {
+                if (i < differentiator)
+                    Console.Write(fillerChar);
+                else
+                    Console.Write(" ");
+            }
         }
     }
 }
