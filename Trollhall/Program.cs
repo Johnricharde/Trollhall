@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.IO;
 using System.Text.Json;
+using NAudio.Wave;
 using System.Media;
 
 namespace Trollhall
@@ -17,6 +18,8 @@ namespace Trollhall
 
         static void Main(string[] args)
         {
+            SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
+            backgroundMusic.PlayLooping();
             if (!Directory.Exists("saves"))
             {
                 Directory.CreateDirectory("saves");
@@ -43,8 +46,7 @@ namespace Trollhall
             Console.Clear();
             Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
             Print($"Your name is {player.name} and you're a proud dwarf of the city of Fjellheim.");
-            Print("You were sent by King Thorim the heartless to retrieve an ancient ledger deep within these ruined halls.");
-
+            Print("You were sent by King Thorim the heartless to retrieve an ancient ledger deep\nwithin these ruined halls.");
             Console.ReadKey();
             Console.Clear();
             Print("You encounter a troll!");
@@ -144,15 +146,17 @@ namespace Trollhall
         }
         public static void Print(string text, int speed = 10)
         {
-            SoundPlayer soundPlayer = new SoundPlayer("./audio/typing.wav");
-            soundPlayer.PlayLooping();
+            WaveOutEvent typing = new WaveOutEvent();
+            typing.Init(new AudioFileReader("./audio/typing.wav"));
+            typing.Play();
             foreach (char character in text)
             {
                 Console.Write(character);
                 System.Threading.Thread.Sleep(speed);
             }
-            soundPlayer.Stop();
             Console.WriteLine();
+            typing.Stop();
+            typing.Dispose();
         }
     }
 }

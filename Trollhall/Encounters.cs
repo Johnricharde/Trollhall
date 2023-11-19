@@ -1,6 +1,8 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,7 +41,7 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch(rand.Next(0, 2))
+            switch (rand.Next(0, 2))
             {
                 case 0:
                     basicFightEncounter();
@@ -83,6 +85,9 @@ namespace Trollhall
                 {
                     // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
+                    WaveOutEvent attack = new WaveOutEvent();
+                    attack.Init(new AudioFileReader("./audio/attack.wav"));
+                    attack.Play();
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4);
@@ -94,6 +99,9 @@ namespace Trollhall
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
                     // DEFEND ------------------------------------------------------------------------------------ DEFEND //
+                    WaveOutEvent defend = new WaveOutEvent();
+                    defend.Init(new AudioFileReader("./audio/defend.wav"));
+                    defend.Play();
                     Program.Print($"As the {enemyName} prepares to strike, you hunker behind your shield!");
                     int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
@@ -117,6 +125,9 @@ namespace Trollhall
                     }
                     else
                     {
+                        WaveOutEvent runAway = new WaveOutEvent();
+                        runAway.Init(new AudioFileReader("./audio/run-away.wav"));
+                        runAway.Play();
                         Program.Print($"You evade the {enemyName}'s attack and manage to escape!");
                         Console.ReadKey();
                         Shop.LoadShop(Program.currentPlayer);
@@ -141,6 +152,9 @@ namespace Trollhall
                             enemyDmg = 0;
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potions--;
+                        WaveOutEvent drink = new WaveOutEvent();
+                        drink.Init(new AudioFileReader("./audio/drink.wav"));
+                        drink.Play();
                         Program.Print($"You drink a potion! You recover {potionValue} health!");
                         Program.Print($"The {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
