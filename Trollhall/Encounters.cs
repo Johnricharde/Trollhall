@@ -12,9 +12,6 @@ namespace Trollhall
     public class Encounters
     {
         static Random rand = new Random();
-        // ENCOUNTER GENERIC -------------------------------------------------------------------------- ENCOUNTER GENERIC //
-
-
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         public static void FirstEncounter()
         {
@@ -115,16 +112,19 @@ namespace Trollhall
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
                     // RUN ------------------------------------------------------------------------------------------ RUN //
+                    // Player fails to run away
                     if (Program.currentPlayer.currentClass != Player.PlayerClass.Hunter && rand.Next(0, 2) == 0)
                     {
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;
+                        Program.currentPlayer.health -= enemyDmg;
                         Program.Print($"As you attempt to flee the {enemyName}, it's strikes you from behind!");
                         Program.Print($"You lose {enemyDmg} health and are unable to escape!");
                         Console.ReadKey();
                     }
                     else
+                    // Player runs away
                     {
                         WaveOutEvent runAway = new WaveOutEvent();
                         runAway.Init(new AudioFileReader("./audio/run-away.wav"));
@@ -137,6 +137,7 @@ namespace Trollhall
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
                 {
                     // HEAL ---------------------------------------------------------------------------------------- HEAL //
+                    // Player has no potions left
                     if (Program.currentPlayer.potions == 0)
                     {
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
@@ -146,6 +147,7 @@ namespace Trollhall
                         Program.Print($"The {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
                     else
+                    // Player has potion
                     {
                         int potionValue = 5 +
                             ((Program.currentPlayer.currentClass == Player.PlayerClass.Cleric)? + 4 : 0);
@@ -163,13 +165,14 @@ namespace Trollhall
                 }
                 if (Program.currentPlayer.health <= 0)
                 {
-                    // Death Code
+                    // Player dies
                     Program.Print($"You have been slain by the {enemyName}.\nYou are dead...");
                     Console.ReadKey();
                     System.Environment.Exit(0);
                 }
                 Console.ReadKey();
             }
+            // Player wins combat
             int coins = Program.currentPlayer.GetCoins();
             int experience = Program.currentPlayer.GetXP();
             Program.Print($"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");

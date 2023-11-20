@@ -9,6 +9,7 @@ using System.Text.Json;
 using NAudio.Wave;
 using System.Media;
 using System.Runtime.InteropServices;
+using Newtonsoft.Json;
 
 namespace Trollhall
 {
@@ -17,6 +18,7 @@ namespace Trollhall
         public static Player currentPlayer = new Player();
         public static bool mainLoop = true;
 
+        // Main() ------------------------------------------------------------------------------------------------------- Main() //
         static void Main(string[] args)
         {
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
@@ -33,7 +35,7 @@ namespace Trollhall
                 Encounters.RandomEncounter();
             }
         }
-
+        // NewStart() ----------------------------------------------------------------------------------------------- NewStart() //
         static Player NewStart(int id)
         {
             Console.Clear();
@@ -74,7 +76,7 @@ namespace Trollhall
             Print("You encounter a troll!");
             return player;
         }
-
+        // QUIT, SAVE, LOAD ----------------------------------------------------------------------------------- QUIT, SAVE, LOAD //
         public static void Quit()
         {
             Save();
@@ -83,9 +85,18 @@ namespace Trollhall
 
         public static void Save()
         {
-            string path = $"./saves/{currentPlayer.id}.level";
-            string json = JsonSerializer.Serialize(currentPlayer);
+            if (currentPlayer == null)
+            {
+                Console.WriteLine("No player data to save.");
+                return;
+            }
+
+            string path = $"saves/{currentPlayer.id.ToString()}.json";
+
+            string json = JsonConvert.SerializeObject(currentPlayer, Formatting.Indented);
             File.WriteAllText(path, json);
+
+            Console.WriteLine("Player data saved successfully.");
         }
 
         public static Player Load(out bool isNewPlayer)
@@ -96,14 +107,12 @@ namespace Trollhall
             List<Player> players = new List<Player>();
             int idCount = 0;
 
-            foreach (string player in paths)
+            foreach (string playerPath in paths)
             {
-                string json = File.ReadAllText(player);
-                Player temp = JsonSerializer.Deserialize<Player>(json);
+                string json = File.ReadAllText(playerPath);
+                Player temp = JsonConvert.DeserializeObject<Player>(json);
                 players.Add(temp);
             }
-
-            idCount = players.Count;
 
             while (true)
             {
@@ -166,7 +175,8 @@ namespace Trollhall
                 }
             }
         }
-        public static void Print(string text, int speed = 5)
+        // Print() ----------------------------------------------------------------------------------------------------- Print() //
+        public static void Print(string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));

@@ -12,7 +12,7 @@ namespace Trollhall
     {
         Random rand = new Random();
 
-        public string name;
+        public string name = "Biff";
         public int id;
         public int coins = 9999;
         public int level = 1;

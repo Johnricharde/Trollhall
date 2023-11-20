@@ -14,7 +14,6 @@ namespace Trollhall
         {
             RunShop(player);
         }
-
         public static void RunShop(Player player)
         {
             int weaponPrice;
@@ -53,7 +52,7 @@ namespace Trollhall
                 Console.WriteLine("]");
                 Console.WriteLine("[E]xit shop");
                 Console.WriteLine("[Q]uit game");
-                // Wait for input
+
                 string input = Console.ReadLine().ToLower();
 
                 if (input == "w" || input == "weapon")
