@@ -79,11 +79,11 @@ namespace Trollhall
         // QUIT, SAVE, LOAD ----------------------------------------------------------------------------------- QUIT, SAVE, LOAD //
         public static void Quit()
         {
-            Save();
+            Save(currentPlayer.name);
             Environment.Exit(0);
         }
 
-        public static void Save()
+        public static void Save(string saveFileName)
         {
             if (currentPlayer == null)
             {
@@ -91,7 +91,7 @@ namespace Trollhall
                 return;
             }
 
-            string path = $"saves/{currentPlayer.id.ToString()}.json";
+            string path = $"saves/{saveFileName}.json";
 
             string json = JsonConvert.SerializeObject(currentPlayer, Formatting.Indented);
             File.WriteAllText(path, json);
@@ -105,7 +105,7 @@ namespace Trollhall
             Console.Clear();
             string[] paths = Directory.GetFiles("saves");
             List<Player> players = new List<Player>();
-            int idCount = 0;
+            int idCount;
 
             foreach (string playerPath in paths)
             {
@@ -114,10 +114,13 @@ namespace Trollhall
                 players.Add(temp);
             }
 
+            players = players.OrderBy(player => player.id).ToList();
+            idCount = players.Count;
+
             while (true)
             {
                 Console.Clear();
-                Print("Choose your player: (id:'number')");
+                Print("Choose your player by typing \"id:\" and number");
 
                 foreach (Player player in players)
                 {
@@ -153,6 +156,7 @@ namespace Trollhall
                     {
                         Player newPlayer = NewStart(idCount);
                         isNewPlayer = true;
+                        idCount++;
                         return newPlayer;
                     }
                     else
