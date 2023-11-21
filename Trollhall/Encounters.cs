@@ -166,6 +166,9 @@ namespace Trollhall
                 if (Program.currentPlayer.health <= 0)
                 {
                     // Player dies
+                    WaveOutEvent playerDeath = new WaveOutEvent();
+                    playerDeath.Init(new AudioFileReader("./audio/player-death.wav"));
+                    playerDeath.Play();
                     Program.Print($"You have been slain by the {enemyName}.\nYou are dead...");
                     Console.ReadKey();
                     System.Environment.Exit(0);
@@ -175,6 +178,9 @@ namespace Trollhall
             // Player wins combat
             int coins = Program.currentPlayer.GetCoins();
             int experience = Program.currentPlayer.GetXP();
+            WaveOutEvent enemyDeath = new WaveOutEvent();
+            enemyDeath.Init(new AudioFileReader("./audio/enemy-death.wav"));
+            enemyDeath.Play();
             Program.Print($"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
             Program.currentPlayer.xp += experience;

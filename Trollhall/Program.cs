@@ -23,6 +23,7 @@ namespace Trollhall
         {
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
             backgroundMusic.PlayLooping();
+
             if (!Directory.Exists("saves"))
             {
                 Directory.CreateDirectory("saves");
@@ -77,12 +78,13 @@ namespace Trollhall
             return player;
         }
         // QUIT, SAVE, LOAD ----------------------------------------------------------------------------------- QUIT, SAVE, LOAD //
+        // Quit //
         public static void Quit()
         {
             Save(currentPlayer.name);
             Environment.Exit(0);
         }
-
+        // Save //
         public static void Save(string saveFileName)
         {
             if (currentPlayer == null)
@@ -98,7 +100,7 @@ namespace Trollhall
 
             Console.WriteLine("Player data saved successfully.");
         }
-
+        // Load //
         public static Player Load(out bool isNewPlayer)
         {
             isNewPlayer = false;
@@ -120,7 +122,7 @@ namespace Trollhall
             while (true)
             {
                 Console.Clear();
-                Print("Choose your player by typing \"id:\" and number");
+                Print("Choose your player by typing \"id:\" and a number");
 
                 foreach (Player player in players)
                 {

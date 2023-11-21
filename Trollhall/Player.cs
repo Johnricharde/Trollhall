@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NAudio.Wave;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -69,6 +70,9 @@ namespace Trollhall
                 xp -= GetLevelUpValue();
                 level++;
             }
+            WaveOutEvent levelUp = new WaveOutEvent();
+            levelUp.Init(new AudioFileReader("./audio/level-up.wav"));
+            levelUp.Play();
             Console.ForegroundColor = ConsoleColor.Yellow;
             Program.Print($"You gained a level!\nYou're level is {level}");
             Console.ResetColor();
