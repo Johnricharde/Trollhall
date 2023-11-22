@@ -126,7 +126,7 @@ namespace Trollhall
 
                 foreach (Player player in players)
                 {
-                    Print($" [{player.id}] - {player.name} the {player.currentClass}");
+                    Print($" [{player.id + 1}] - {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
                 Print(" [C]reate a new character\n");
@@ -137,7 +137,7 @@ namespace Trollhall
                     {
                         foreach (Player player in players)
                         {
-                            if (player.id == id)
+                            if (player.id == id - 1)
                             {
                                 return player;
                             }
