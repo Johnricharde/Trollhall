@@ -126,7 +126,7 @@ namespace Trollhall
 
                 foreach (Player player in players)
                 {
-                    Print($"[{player.id}]: {player.name}");
+                    Print($"[{player.id}]: {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
                 Print("[C]reate a new character");
@@ -196,6 +196,7 @@ namespace Trollhall
             typing.Stop();
             typing.Dispose();
         }
+        // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
         public static void ExperienceBar(string fillerChar, decimal value, int size)
         {
             int differentiator = (int)(value * size);
@@ -204,7 +205,7 @@ namespace Trollhall
                 if (i < differentiator)
                     Console.Write(fillerChar);
                 else
-                    Console.Write(" ");
+                    Console.Write("░");
             }
         }
     }

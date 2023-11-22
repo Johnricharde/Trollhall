@@ -29,29 +29,29 @@ namespace Trollhall
                 difficultyPrice = 300 + 100 * player.difficultyMod;
 
                 Console.Clear();
-                Console.WriteLine("==========================");
-                Console.WriteLine("           SHOP           ");
-                Console.WriteLine("==========================");
-                Console.WriteLine($"GOLD:             {player.coins}\n");
-                Console.WriteLine($"[W]eapon:         {weaponPrice}");
-                Console.WriteLine($"[A]rmor:          {armorPrice}");
-                Console.WriteLine($"[P]otion:         {potionPrice}");
-                Console.WriteLine($"[D]ifficulty:     {difficultyPrice}");
-                Console.WriteLine("==========================");
-                Console.WriteLine( "      PLAYER STATS       ");
-                Console.WriteLine("==========================");
-                Console.WriteLine($"PLAYER:           {player.name}\n");
-                Console.WriteLine($"Health:           {player.health}");
-                Console.WriteLine($"Potions:          {player.potions}\n");
-                Console.WriteLine($"Weapon Mod:     + {player.weaponValue - 1}");
-                Console.WriteLine($"Armor Mod:      + {player.armorValue}");
-                Console.WriteLine($"Difficulty Mod: + {player.difficultyMod}");
-                Console.WriteLine($"Level: {player.level}");
-                Console.Write("[");
-                Program.ExperienceBar("+", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
-                Console.WriteLine("]");
+                Console.WriteLine("===========================");
+                Console.WriteLine("       VILLAGE SHOP        ");
+                Console.WriteLine("===========================");
+                Console.WriteLine($"GOLD:                £ {player.coins}\n");
+                Console.WriteLine($"[W]eapon:              {weaponPrice}");
+                Console.WriteLine($"[A]rmor:               {armorPrice}");
+                Console.WriteLine($"[P]otion:              {potionPrice}");
+                Console.WriteLine($"[D]ifficulty:          {difficultyPrice}");
+                Console.WriteLine("===========================");
+                Console.WriteLine("       PLAYER STATS        ");
+                Console.WriteLine("===========================");
+                Console.WriteLine($"PLAYER: {player.name} the {player.currentClass}\n");
+                Console.WriteLine($"Health:            {player.health}");
+                Console.WriteLine($"Potions:           {player.potions}\n");
+                Console.WriteLine($"Weapon         Mod:  + {player.weaponValue - 1}");
+                Console.WriteLine($"Armor          Mod:  + {player.armorValue}");
+                Console.WriteLine($"Difficulty     Mod:  + {player.difficultyMod}");
+                Console.Write("|");
+                Program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
+                Console.WriteLine($"|Lvl: {player.level}");
+                Console.WriteLine("===========================");
                 Console.WriteLine("[E]xit shop");
-                Console.WriteLine("[Q]uit game");
+                Console.WriteLine("[S]ave and quit");
 
                 string input = Console.ReadLine().ToLower();
 
@@ -63,7 +63,7 @@ namespace Trollhall
                     TryBuy("potion", potionPrice, player);
                 else if (input == "d" || input == "difficulty")
                     TryBuy("difficulty", difficultyPrice, player);
-                else if (input == "q" || input == "quit")
+                else if (input == "s" || input == "save")
                     Program.Quit();
                 else if (input == "e" || input == "exit")
                     Encounters.RandomEncounter(); 

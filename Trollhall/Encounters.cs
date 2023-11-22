@@ -178,9 +178,11 @@ namespace Trollhall
             // Player wins combat
             int coins = Program.currentPlayer.GetCoins();
             int experience = Program.currentPlayer.GetXP();
+
             WaveOutEvent enemyDeath = new WaveOutEvent();
             enemyDeath.Init(new AudioFileReader("./audio/enemy-death.wav"));
             enemyDeath.Play();
+
             Program.Print($"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
             Program.currentPlayer.xp += experience;
