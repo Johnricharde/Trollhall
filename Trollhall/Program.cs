@@ -48,7 +48,7 @@ namespace Trollhall
                 player.name = Console.ReadLine();
             Print("Choose a class:");
             Print(" [S]oldiers boast great strength");
-            Print(" [H]unters are quick on their feet");
+            Print(" [R]anger are quick on their feet");
             Print(" [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
@@ -57,7 +57,7 @@ namespace Trollhall
                 flag = true;
                 if (input == "warrior" || input == "w")
                     player.currentClass = Player.PlayerClass.Warrior;
-                else if (input == "ranger" || input == "h")
+                else if (input == "ranger" || input == "r")
                     player.currentClass = Player.PlayerClass.Ranger;
                 else if (input == "cleric" || input == "c")
                     player.currentClass = Player.PlayerClass.Cleric;
@@ -131,6 +131,16 @@ namespace Trollhall
                 Console.WriteLine();
                 Print(" [C]reate a new character\n");
 
+                string userInput = Console.ReadLine().ToLower();
+
+                if (userInput == "c" || userInput == "create")
+                {
+                    Player newPlayer = NewStart(idCount);
+                    isNewPlayer = true;
+                    idCount++;
+                    return newPlayer;
+                }
+
                 try
                 {
                     if (int.TryParse(Console.ReadLine(), out int id))
@@ -147,7 +157,7 @@ namespace Trollhall
                     }
                     else
                     {
-                        Print("Your input needs to be a number");
+                        Print("Not a valid input");
                         Console.ReadKey();
                     }
                 }
@@ -158,7 +168,9 @@ namespace Trollhall
                 }
             }
         }
+
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
+        // Basically just Console.Write() but with a delay and sound effect
         public static void Print(string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();
