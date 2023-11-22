@@ -15,16 +15,21 @@ namespace Trollhall
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         public static void FirstEncounter()
         {
-            Program.Print("You draw your axe and charge at the troll.");
+            Program.Print("It's at death's door.\nAn open wound is exposing it's innards.\n" +
+                "It would probably die of it's own, but why risk it?");
             Console.ReadKey();
-            Combat(false, "Troll", 1, 5);
+            Combat(false, "Half-Dead Troll", 1, 20);
         }
-        public static void TrollShamanEncounter()
+        public static void TrollBehemothEncounter()
         { 
             Console.Clear();
-            Program.Print("You encounter a menacing troll shaman!");
+            Program.Print("A troll behemoth has found you!\n" +
+                "It looms over you, thrice your size.\n" +
+                "These monstrosities were the backbone of the troll invasion force\n" +
+                "that reclaimed the Trollhalls...\n\n" +
+                "It might be wise to run...");
             Console.ReadKey();
-            Combat(false, "Troll Shaman", 4, 3);
+            Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100);
         }
         public static void basicFightEncounter()
         {
@@ -38,13 +43,19 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 2))
+            switch (rand.Next(0, 4))
             {
                 case 0:
-                    basicFightEncounter();
+                    TrollBehemothEncounter();
                     break;
                 case 1:
-                    TrollShamanEncounter();
+                    basicFightEncounter();
+                    break;
+                case 2:
+                    basicFightEncounter();
+                    break;
+                case 3:
+                    basicFightEncounter();
                     break;
             }
         }
@@ -191,10 +202,12 @@ namespace Trollhall
                 Program.currentPlayer.LevelUp();
             }
             Console.ReadKey();
+            Encounters.RandomEncounter();
+
         }
         public static string GetName()
         {
-            switch (rand.Next(0, 4))
+            switch (rand.Next(0, 5))
             {
                 case 0:
                     return "Rock Spider";
@@ -203,7 +216,9 @@ namespace Trollhall
                 case 2:
                     return "Giant Bat";
                 case 3:
-                    return "Troll";
+                    return "Trollspawn";
+                case 4:
+                    return "Dwarf Ghost";
             }
             return "Beast";
         }

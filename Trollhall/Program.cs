@@ -47,7 +47,7 @@ namespace Trollhall
             while (player.name == "")
                 player.name = Console.ReadLine();
             Print("Choose a class:");
-            Print(" [S]oldiers boast great strength");
+            Print(" [W]arrior boast great strength");
             Print(" [R]angers are quick on their feet");
             Print(" [C]lerics recieve great blessings");
             bool flag = false;
@@ -149,12 +149,12 @@ namespace Trollhall
                                 return player;
                             }
                         }
-                        Print("There is no player with that id");
+                        Print("Couldn't find that id...");
                         Console.ReadKey();
                     }
                     else
                     {
-                        Print("Not a valid input");
+                        Print("Couldn't find that name...");
                         Console.ReadKey();
                     }
             }
