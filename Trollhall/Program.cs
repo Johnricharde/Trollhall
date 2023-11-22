@@ -47,18 +47,18 @@ namespace Trollhall
             while (player.name == "")
                 player.name = Console.ReadLine();
             Print("Choose a class:");
-            Print("[S]oldiers boast great strength");
-            Print("[H]unters are quick on their feet");
-            Print("[C]lerics recieve great blessings");
+            Print(" [S]oldiers boast great strength");
+            Print(" [H]unters are quick on their feet");
+            Print(" [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
             {
                 string input = Console.ReadLine().ToLower();
                 flag = true;
-                if (input == "soldier" || input == "s")
-                    player.currentClass = Player.PlayerClass.Soldier;
-                else if (input == "hunter" || input == "h")
-                    player.currentClass = Player.PlayerClass.Hunter;
+                if (input == "warrior" || input == "w")
+                    player.currentClass = Player.PlayerClass.Warrior;
+                else if (input == "ranger" || input == "h")
+                    player.currentClass = Player.PlayerClass.Ranger;
                 else if (input == "cleric" || input == "c")
                     player.currentClass = Player.PlayerClass.Cleric;
                 else
@@ -122,55 +122,32 @@ namespace Trollhall
             while (true)
             {
                 Console.Clear();
-                Print("Choose your player by typing \"id:\" and a number");
+                Print("Square brackets \"[]\" signify a valid input\n");
 
                 foreach (Player player in players)
                 {
-                    Print($"[{player.id}]: {player.name} the {player.currentClass}");
+                    Print($" [{player.id}] - {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
-                Print("[C]reate a new character");
-                string[] data = Console.ReadLine().ToLower().Split(':');
+                Print(" [C]reate a new character\n");
 
                 try
                 {
-                    if (data[0] == "id")
-                    {
-                        if (int.TryParse(data[1], out int id))
-                        {
-                            foreach (Player player in players)
-                            {
-                                if (player.id == id)
-                                {
-                                    return player;
-                                }
-                            }
-                            Print("There is no player with that id");
-                            Console.ReadKey();
-                        }
-                        else
-                        {
-                            Print("Your id needs to be a number");
-                            Console.ReadKey();
-                        }
-                    }
-                    else if (data[0] == "create" || data[0] == "c")
-                    {
-                        Player newPlayer = NewStart(idCount);
-                        isNewPlayer = true;
-                        idCount++;
-                        return newPlayer;
-                    }
-                    else
+                    if (int.TryParse(Console.ReadLine(), out int id))
                     {
                         foreach (Player player in players)
                         {
-                            if (player.name == data[0])
+                            if (player.id == id)
                             {
                                 return player;
                             }
                         }
-                        Print("There is no player with that name");
+                        Print("There is no player with that id");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Print("Your input needs to be a number");
                         Console.ReadKey();
                     }
                 }

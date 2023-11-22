@@ -88,7 +88,7 @@ namespace Trollhall
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) +
-                        ((Program.currentPlayer.currentClass == Player.PlayerClass.Soldier) ? 2 : 0);
+                        ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
                     Program.Print($"You attack the {enemyName}, it strikes back!");
@@ -113,7 +113,7 @@ namespace Trollhall
                 {
                     // RUN ------------------------------------------------------------------------------------------ RUN //
                     // Player fails to run away
-                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Hunter && rand.Next(0, 2) == 0)
+                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && rand.Next(0, 2) == 0)
                     {
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)

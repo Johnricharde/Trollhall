@@ -25,8 +25,8 @@ namespace Trollhall
         public int weaponValue = 1;
         public int difficultyMod = 0;
 
-        public enum PlayerClass {Soldier, Hunter, Cleric}
-        public PlayerClass currentClass = PlayerClass.Soldier;
+        public enum PlayerClass {Warrior, Ranger, Cleric}
+        public PlayerClass currentClass = PlayerClass.Warrior;
 
         public int GetHealth()
         {

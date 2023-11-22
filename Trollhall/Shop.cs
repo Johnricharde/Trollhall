@@ -40,7 +40,7 @@ namespace Trollhall
                 Console.WriteLine("===========================");
                 Console.WriteLine("       PLAYER STATS        ");
                 Console.WriteLine("===========================");
-                Console.WriteLine($"PLAYER: {player.name} the {player.currentClass}\n");
+                Console.WriteLine($"NAME:   {player.name} the {player.currentClass}\n");
                 Console.WriteLine($"Health:            {player.health}");
                 Console.WriteLine($"Potions:           {player.potions}\n");
                 Console.WriteLine($"Weapon         Mod:  + {player.weaponValue - 1}");
