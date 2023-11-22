@@ -74,7 +74,7 @@ namespace Trollhall
             levelUp.Init(new AudioFileReader("./audio/level-up.wav"));
             levelUp.Play();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Program.Print($"You gained a level!\nYou're level is {level}");
+            Program.Print($"You gained a level!\nYou're level is now {level}");
             Console.ResetColor();
         }
     }

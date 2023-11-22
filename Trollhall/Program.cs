@@ -48,7 +48,7 @@ namespace Trollhall
                 player.name = Console.ReadLine();
             Print("Choose a class:");
             Print(" [S]oldiers boast great strength");
-            Print(" [R]anger are quick on their feet");
+            Print(" [R]angers are quick on their feet");
             Print(" [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
@@ -133,17 +133,14 @@ namespace Trollhall
 
                 string userInput = Console.ReadLine().ToLower();
 
-                if (userInput == "c" || userInput == "create")
-                {
-                    Player newPlayer = NewStart(idCount);
-                    isNewPlayer = true;
-                    idCount++;
-                    return newPlayer;
-                }
-
-                try
-                {
-                    if (int.TryParse(Console.ReadLine(), out int id))
+                    if (userInput == "c" || userInput == "create")
+                    {
+                        Player newPlayer = NewStart(idCount);
+                        isNewPlayer = true;
+                        idCount++;
+                        return newPlayer;
+                    }
+                    else if (int.TryParse(userInput, out int id))
                     {
                         foreach (Player player in players)
                         {
@@ -160,15 +157,9 @@ namespace Trollhall
                         Print("Not a valid input");
                         Console.ReadKey();
                     }
-                }
-                catch (IndexOutOfRangeException)
-                {
-                    Print("Your id needs to be a number");
-                    Console.ReadKey();
-                }
             }
         }
-
+        /////////////////////////////
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect
         public static void Print(string text, int speed = 1)
