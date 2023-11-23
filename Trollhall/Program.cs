@@ -78,14 +78,13 @@ namespace Trollhall
             Print("You encounter a troll!");
             return player;
         }
-        // QUIT, SAVE, LOAD ----------------------------------------------------------------------------------- QUIT, SAVE, LOAD //
-        // Quit //
+        // Quit() ------------------------------------------------------------------------------------------------------- Quit() //
         public static void Quit()
         {
             Save(currentPlayer.name);
             Environment.Exit(0);
         }
-        // Save //
+        // Save() ------------------------------------------------------------------------------------------------------- Save() //
         public static void Save(string saveFileName)
         {
             if (currentPlayer == null)
@@ -101,7 +100,7 @@ namespace Trollhall
 
             Console.WriteLine("Player data saved successfully.");
         }
-        // Load //
+        // Load() ------------------------------------------------------------------------------------------------------- Load() //
         public static Player Load(out bool isNewPlayer)
         {
             isNewPlayer = false;
@@ -130,7 +129,7 @@ namespace Trollhall
                     Print($" [{player.id + 1}] - {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
-                Print(" [C]reate a new character\n");
+                Print(" [C]reate a new character\n [D]elete a character\n");
 
                 string userInput = Console.ReadLine().ToLower();
 
@@ -141,7 +140,11 @@ namespace Trollhall
                         idCount++;
                         return newPlayer;
                     }
-                    else if (int.TryParse(userInput, out int id))
+                    else if (userInput == "d" || userInput == "delete")
+                    {
+                    DeleteCharacter(players);
+                }
+                else if (int.TryParse(userInput, out int id))
                     {
                         foreach (Player player in players)
                         {
@@ -160,9 +163,46 @@ namespace Trollhall
                     }
             }
         }
+        // DeleteCharacter() --------------------------------------------------------------------------------- DeleteCharacter() //
+        private static void DeleteCharacter(List<Player> players)
+        {
+            Print("Which character do you want to delete?");
+            int idToDelete;
+
+            if (int.TryParse(Console.ReadLine(), out idToDelete))
+            {
+                Player playerToDelete = players.FirstOrDefault(player => player.id == idToDelete - 1);
+
+                if (playerToDelete != null)
+                {
+                    Print($"Are you sure you want to delete {playerToDelete.name} the {playerToDelete.currentClass}? [y/n]");
+                    string confirmation = Console.ReadLine().ToLower();
+
+                    if (confirmation == "y" || confirmation == "yes")
+                    {
+                        string pathToDelete = $"saves/{playerToDelete.name}.json";
+                        File.Delete(pathToDelete);
+                        Print($"Player {playerToDelete.name} deleted successfully.");
+                        Load(out bool isNewPlayer);
+                    }
+                    else
+                    {
+                        Print("Deletion canceled.");
+                    }
+                }
+                else
+                {
+                    Print("Invalid ID. Please enter a valid character ID.");
+                }
+            }
+            else
+            {
+                Print("Invalid input. Please enter a valid character ID.");
+            }
+        }
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect
-        public static void Print(string text, int speed = 1)
+        public static void Print(string text, int speed = 10)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));
@@ -170,7 +210,7 @@ namespace Trollhall
             foreach (char character in text)
             {
                 Console.Write(character);
-                System.Threading.Thread.Sleep(speed);
+                Thread.Sleep(speed);
             }
             Console.WriteLine();
             typing.Stop();

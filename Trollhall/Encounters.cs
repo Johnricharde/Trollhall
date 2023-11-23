@@ -13,6 +13,27 @@ namespace Trollhall
     {
         static Random rand = new Random();
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
+        // Trap Encounters //
+        private static void TrollSpikeTrapEncounter()
+        {
+
+        }
+        // Lore Encounters //
+        private static void FirebrandBreweryEncounter()
+        {
+
+        }
+        // Riddle Encounters //
+        private static void DwarfPuzzleEncounter()
+        {
+
+        }
+        // Social Encounters //
+        private static void DwarfClericEncounter()
+        {
+
+        }
+        // Combat Encounters //
         public static void FirstEncounter()
         {
             Program.Print("It's at death's door.\nAn open wound is exposing it's innards.\n" +
@@ -20,7 +41,7 @@ namespace Trollhall
             Console.ReadKey();
             CombatMechanics.Combat(false, "Half-Dead Troll", 1, 20);
         }
-        public static void TrollBehemothEncounter()
+        private static void TrollBehemothEncounter()
         { 
             Console.Clear();
             Program.Print("A troll behemoth has found you!\n" +
@@ -31,7 +52,7 @@ namespace Trollhall
             Console.ReadKey();
             CombatMechanics.Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100);
         }
-        public static void basicFightEncounter()
+        private static void basicFightEncounter()
         {
             Console.Clear();
             Program.Print($"You encounter an enemy!");
@@ -46,15 +67,6 @@ namespace Trollhall
             switch (rand.Next(0, 100))
             {
                 case 0:
-                    TrollBehemothEncounter();
-                    break;
-                case 1:
-                    TrollBehemothEncounter();
-                    break;
-                case 2:
-                    TrollBehemothEncounter();
-                    break;
-                case 3:
                     TrollBehemothEncounter();
                     break;
                 default:
