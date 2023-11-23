@@ -46,10 +46,7 @@ namespace Trollhall
             player.id = id;
             while (player.name == "")
                 player.name = Console.ReadLine();
-            Print("Choose a class:");
-            Print(" [W]arriors boast great strength");
-            Print(" [R]angers are quick on their feet");
-            Print(" [C]lerics recieve great blessings");
+            Print("Choose a class:\n [W]arriors boast great strength\n [R]angers are quick on their feet\n [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
             {
@@ -69,10 +66,7 @@ namespace Trollhall
                 
             }
             Console.Clear();
-            Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
-            Print($"Your name is {player.name} and you're a proud dwarf of the fallen city of Trollhall.");
-            Print("The dwarven King Thorim is criticised for not doing more to reclaim these halls.");
-            Print("And so the burden falls to lone dwarves like yourself.");
+            Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
             Console.ReadKey();
             Console.Clear();
             Print("You encounter a troll!");
@@ -126,7 +120,7 @@ namespace Trollhall
 
                 foreach (Player player in players)
                 {
-                    Print($" [{player.id + 1}] - {player.name} the {player.currentClass}");
+                    Print($" [{player.id + 1}] {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
                 Print(" [C]reate a new character\n [D]elete a character\n");
@@ -227,6 +221,14 @@ namespace Trollhall
                 else
                     Console.Write("░");
             }
+        }
+        // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
+        // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
+        public static void PlaySoundEffect(string soundFile)
+        {
+            WaveOutEvent sound = new WaveOutEvent();
+            sound.Init(new AudioFileReader($"./audio/{soundFile}.wav"));
+            sound.Play();
         }
     }
 }

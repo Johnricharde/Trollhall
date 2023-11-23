@@ -45,32 +45,26 @@ namespace Trollhall
                 {
                     // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
-                    WaveOutEvent attack = new WaveOutEvent();
-                    attack.Init(new AudioFileReader("./audio/attack.wav"));
-                    attack.Play();
+                    Program.PlaySoundEffect("attack");
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) +
                         ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print($"You attack the {enemyName}, it strikes back!");
-                    Program.Print($"You take {enemyDmg} damage and you deal {playerDmg} damage");
+                    Program.Print($"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
                     // DEFEND ------------------------------------------------------------------------------------ DEFEND //
-                    WaveOutEvent defend = new WaveOutEvent();
-                    defend.Init(new AudioFileReader("./audio/defend.wav"));
-                    defend.Play();
-                    Program.Print($"As the {enemyName} prepares to strike, you hunker behind your shield!");
+                    Program.PlaySoundEffect("defend");
                     int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print($"You take {enemyDmg} damage and you deal {playerDmg} damage");
+                    Program.Print($"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
@@ -82,16 +76,13 @@ namespace Trollhall
                         if (enemyDmg < 0)
                             enemyDmg = 0;
                         Program.currentPlayer.health -= enemyDmg;
-                        Program.Print($"As you attempt to flee the {enemyName}, it's strikes you from behind!");
-                        Program.Print($"You lose {enemyDmg} health and are unable to escape!");
+                        Program.Print($"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
                         Console.ReadKey();
                     }
                     else
                     // Player runs away
                     {
-                        WaveOutEvent runAway = new WaveOutEvent();
-                        runAway.Init(new AudioFileReader("./audio/run-away.wav"));
-                        runAway.Play();
+                        Program.PlaySoundEffect("run-away");
                         Program.Print($"You evade the {enemyName}'s attack and manage to escape!");
                         Console.ReadKey();
                         Shop.LoadShop(Program.currentPlayer);
@@ -106,8 +97,7 @@ namespace Trollhall
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;
-                        Program.Print("You have no potions left!");
-                        Program.Print($"The {enemyName} strikes at you! Dealing {enemyDmg} damage!");
+                        Program.Print("You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
                     else
                     // Player has potion
@@ -119,19 +109,14 @@ namespace Trollhall
                             enemyDmg = 0;
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potions--;
-                        WaveOutEvent drink = new WaveOutEvent();
-                        drink.Init(new AudioFileReader("./audio/drink.wav"));
-                        drink.Play();
-                        Program.Print($"You drink a potion! You recover {potionValue} health!");
-                        Program.Print($"The {enemyName} strikes! Dealing {enemyDmg} damage!");
+                        Program.PlaySoundEffect("drink");
+                        Program.Print($"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
                 if (Program.currentPlayer.health <= 0)
                 {
                     // Player dies
-                    WaveOutEvent playerDeath = new WaveOutEvent();
-                    playerDeath.Init(new AudioFileReader("./audio/player-death.wav"));
-                    playerDeath.Play();
+                    Program.PlaySoundEffect("player-death");
                     Program.Print($"You have been slain by the {enemyName}.\nYou are dead...");
                     Console.ReadKey();
                     System.Environment.Exit(0);
@@ -142,10 +127,7 @@ namespace Trollhall
             int coins = Program.currentPlayer.GetCoins();
             int experience = Program.currentPlayer.GetXP();
 
-            WaveOutEvent enemyDeath = new WaveOutEvent();
-            enemyDeath.Init(new AudioFileReader("./audio/enemy-death.wav"));
-            enemyDeath.Play();
-
+            Program.PlaySoundEffect("enemy-death");
             Program.Print($"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
             Program.currentPlayer.xp += experience;

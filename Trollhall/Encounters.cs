@@ -13,42 +13,58 @@ namespace Trollhall
     {
         static Random rand = new Random();
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
-        // Trap Encounters //
+        // Trap Encounters ------------------------------------------------------------------------------ Trap Encounters //
         private static void TrollSpikeTrapEncounter()
         {
 
         }
-        // Lore Encounters //
+        // Lore Encounters ------------------------------------------------------------------------------ Lore Encounters //
         private static void FirebrandBreweryEncounter()
         {
 
         }
-        // Riddle Encounters //
+        // Riddle Encounters -------------------------------------------------------------------------- Riddle Encounters //
         private static void DwarfPuzzleEncounter()
         {
 
         }
-        // Social Encounters //
+        // Social Encounters -------------------------------------------------------------------------- Social Encounters //
         private static void DwarfClericEncounter()
         {
-
+            SocialEncounter();
+            Program.Print("You meet a Dwarf cleric who offers you a blessing.\nDo you accept? [y/n]");
+            if (Console.ReadLine() == "y")
+            {
+                Program.currentPlayer.health += 10;
+                Program.Print("You accept his blessing, rejuvenating old wounds.\nYou've gained 10 health!");
+                Console.ReadKey();
+            }
+            else
+            {
+                int coins = Program.currentPlayer.GetCoins() * 3;
+                Program.currentPlayer.coins += coins;
+                Program.Print($"You politely decline his offer.\nHe insists that you at least accept gold to help\nhelp you on your quest.\nYou've gained {coins}!");
+                Console.ReadKey();
+            }
+            RandomEncounter();
         }
-        // Combat Encounters //
+        private static void SocialEncounter()
+        {
+            Console.Clear();
+            Program.Print("You encounter a traveller!");
+            Console.ReadKey();
+        }
+        // Combat Encounters -------------------------------------------------------------------------- Combat Encounters //
         public static void FirstEncounter()
         {
-            Program.Print("It's at death's door.\nAn open wound is exposing it's innards.\n" +
-                "It would probably die of it's own, but why risk it?");
+            Program.Print("It's at death's door.\nAn open wound is exposing it's innards.\nIt would probably die of it's own, but why risk it?");
             Console.ReadKey();
             CombatMechanics.Combat(false, "Half-Dead Troll", 1, 20);
         }
         private static void TrollBehemothEncounter()
         { 
             Console.Clear();
-            Program.Print("A troll behemoth has found you!\n" +
-                "It looms over you, thrice your size.\n" +
-                "These monstrosities were the backbone of the troll invasion force\n" +
-                "that reclaimed the Trollhalls...\n\n" +
-                "It might be wise to run...");
+            Program.Print("A troll behemoth has found you!\nIt looms over you, thrice your size.\nThese monstrosities were the backbone of the troll invasion force\nthat reclaimed the Trollhalls...\n\nIt might be wise to run...");
             Console.ReadKey();
             CombatMechanics.Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100);
         }
@@ -64,10 +80,13 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 100))
+            switch (rand.Next(0, 3))
             {
-                case 0:
-                    TrollBehemothEncounter();
+                //case 0:
+                //    TrollBehemothEncounter();
+                //    break;
+                case 1:
+                    DwarfClericEncounter();
                     break;
                 default:
                     basicFightEncounter();

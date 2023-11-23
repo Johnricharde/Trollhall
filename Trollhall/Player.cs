@@ -70,10 +70,7 @@ namespace Trollhall
                 xp -= GetLevelUpValue();
                 level++;
             }
-            WaveOutEvent levelUp = new WaveOutEvent();
-            levelUp.Init(new AudioFileReader("./audio/level-up.wav"));
-            levelUp.Play();
-
+            Program.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
             Program.Print($"You gained a level!\nYou're level is now {level}");
             Console.ResetColor();
