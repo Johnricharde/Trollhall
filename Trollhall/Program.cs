@@ -47,7 +47,7 @@ namespace Trollhall
             while (player.name == "")
                 player.name = Console.ReadLine();
             Print("Choose a class:");
-            Print(" [W]arrior boast great strength");
+            Print(" [W]arriors boast great strength");
             Print(" [R]angers are quick on their feet");
             Print(" [C]lerics recieve great blessings");
             bool flag = false;
@@ -70,8 +70,9 @@ namespace Trollhall
             }
             Console.Clear();
             Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...");
-            Print($"Your name is {player.name} and you're a proud dwarf of the city of Fjellheim.");
-            Print("You were sent by King Thorim the heartless to retrieve an ancient ledger deep\nwithin these ruined halls.");
+            Print($"Your name is {player.name} and you're a proud dwarf of the fallen city of Trollhall.");
+            Print("The dwarven King Thorim is criticised for not doing more to reclaim these halls.");
+            Print("And so the burden falls to lone dwarves like yourself.");
             Console.ReadKey();
             Console.Clear();
             Print("You encounter a troll!");
@@ -159,7 +160,6 @@ namespace Trollhall
                     }
             }
         }
-        /////////////////////////////
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect
         public static void Print(string text, int speed = 1)
