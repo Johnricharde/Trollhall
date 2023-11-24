@@ -38,7 +38,7 @@ namespace Trollhall
                 Console.WriteLine("| [R]un    | [H]eal   |");
                 Console.WriteLine("=======================\n");
                 Console.WriteLine($"PLAYER:  {Program.currentPlayer.name}");
-                Console.WriteLine($"Health:  {Program.currentPlayer.health}");
+                Console.WriteLine($"Health:  {Program.currentPlayer.health}/{Program.currentPlayer.maxHealth}");
                 Console.WriteLine($"Potions: {Program.currentPlayer.potions}\n");
                 string input = Console.ReadLine();
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
@@ -102,8 +102,8 @@ namespace Trollhall
                     else
                     // Player has potion
                     {
-                        int potionValue = 5 +
-                            ((Program.currentPlayer.currentClass == Player.PlayerClass.Cleric) ? +4 : 0);
+                        int potionValue = Program.currentPlayer.GetHeal();
+                        potionValue += (Program.currentPlayer.currentClass == Player.PlayerClass.Cleric ? potionValue : 0);
                         int enemyDmg = enemyPower / 2 - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;

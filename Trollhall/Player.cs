@@ -13,12 +13,13 @@ namespace Trollhall
     {
         Random rand = new Random();
 
-        public string name = "Biff";
+        public string name = "Bomli Bronzebottom";
         public int id;
         public int coins = 9999;
         public int level = 1;
         public int xp = 0;
         public int health = 10;
+        public int maxHealth = 10;
         public int damage = 1;
         public int armorValue = 0;
         public int potions = 5;
@@ -28,6 +29,13 @@ namespace Trollhall
         public enum PlayerClass {Warrior, Ranger, Cleric}
         public PlayerClass currentClass = PlayerClass.Warrior;
 
+        public int GetHeal()
+        {
+            int staticHealAmount = 2 * difficultyMod + 5;
+            int maxHealAmount = maxHealth - health;
+            int healAmount = Math.Min(staticHealAmount, maxHealAmount);
+            return healAmount;
+        }
         public int GetHealth()
         {
             int upper = (2 * difficultyMod + 5);
@@ -65,6 +73,7 @@ namespace Trollhall
         }
         public void LevelUp()
         {
+            maxHealth += 5;
             while (CanLevelUp())
             {
                 xp -= GetLevelUpValue();

@@ -41,7 +41,7 @@ namespace Trollhall
                 Console.WriteLine("       PLAYER STATS        ");
                 Console.WriteLine("===========================");
                 Console.WriteLine($" NAME: {player.name} the {player.currentClass}\n");
-                Console.WriteLine($" Health:           {player.health}");
+                Console.WriteLine($" Health:           {player.health}/{player.maxHealth}");
                 Console.WriteLine($" Potions:          {player.potions}\n");
                 Console.WriteLine($" Weapon        Mod:  + {player.weaponValue - 1}");
                 Console.WriteLine($" Armor         Mod:  + {player.armorValue}");

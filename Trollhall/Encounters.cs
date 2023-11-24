@@ -35,8 +35,9 @@ namespace Trollhall
             Program.Print("You meet a Dwarf cleric who offers you a blessing.\nDo you accept? [y/n]");
             if (Console.ReadLine() == "y")
             {
-                Program.currentPlayer.health += 10;
-                Program.Print("You accept his blessing, rejuvenating old wounds.\nYou've gained 10 health!");
+                int healAmount = Program.currentPlayer.GetHeal();
+                Program.currentPlayer.health += healAmount;
+                Program.Print($"You accept his blessing, rejuvenating old wounds.\nYou've gained {healAmount} health!");
                 Console.ReadKey();
             }
             else

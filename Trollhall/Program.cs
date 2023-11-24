@@ -66,7 +66,7 @@ namespace Trollhall
                 
             }
             Console.Clear();
-            Print("You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
+            Print($"You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
             Console.ReadKey();
             Console.Clear();
             Print("You encounter a troll!");
