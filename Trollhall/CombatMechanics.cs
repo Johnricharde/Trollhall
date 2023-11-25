@@ -41,9 +41,9 @@ namespace Trollhall
                 Console.WriteLine($"Health:  {Program.currentPlayer.health}/{Program.currentPlayer.maxHealth}");
                 Console.WriteLine($"Potions: {Program.currentPlayer.potions}\n");
                 string input = Console.ReadLine();
+                    // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
-                    // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                     Program.PlaySoundEffect("attack");
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
@@ -54,9 +54,9 @@ namespace Trollhall
                     Program.currentPlayer.health -= enemyDmg;
                     Program.Print($"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
+                    // DEFEND ------------------------------------------------------------------------------------ DEFEND //
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
-                    // DEFEND ------------------------------------------------------------------------------------ DEFEND //
                     Program.PlaySoundEffect("defend");
                     int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
@@ -66,9 +66,9 @@ namespace Trollhall
                     Program.currentPlayer.health -= enemyDmg;
                     Program.Print($"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
+                    // RUN ------------------------------------------------------------------------------------------ RUN //
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
-                    // RUN ------------------------------------------------------------------------------------------ RUN //
                     // Player fails to run away
                     if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && rand.Next(0, 2) == 0)
                     {
@@ -79,8 +79,8 @@ namespace Trollhall
                         Program.Print($"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
                         Console.ReadKey();
                     }
-                    else
                     // Player runs away
+                    else
                     {
                         Program.PlaySoundEffect("run-away");
                         Program.Print($"You evade the {enemyName}'s attack and manage to escape!");
@@ -88,9 +88,9 @@ namespace Trollhall
                         Shop.LoadShop(Program.currentPlayer);
                     }
                 }
+                    // HEAL ---------------------------------------------------------------------------------------- HEAL //
                 else if (input.ToLower() == "h" || input.ToLower() == "heal")
                 {
-                    // HEAL ---------------------------------------------------------------------------------------- HEAL //
                     // Player has no potions left
                     if (Program.currentPlayer.potions == 0)
                     {
@@ -99,8 +99,8 @@ namespace Trollhall
                             enemyDmg = 0;
                         Program.Print("You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
-                    else
                     // Player has potion
+                    else
                     {
                         int potionValue = Program.currentPlayer.GetHeal();
                         potionValue += (Program.currentPlayer.currentClass == Player.PlayerClass.Cleric ? potionValue : 0);
@@ -113,9 +113,9 @@ namespace Trollhall
                         Program.Print($"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
+                    // Player dies
                 if (Program.currentPlayer.health <= 0)
                 {
-                    // Player dies
                     Program.currentPlayer.playerDeath($"You were slain by {enemyName}");
                 }
                 Console.ReadKey();

@@ -20,7 +20,7 @@ namespace Trollhall
             int damageTaken = Program.currentPlayer.GetPower();
             damageTaken = (Program.currentPlayer.currentClass == Player.PlayerClass.Ranger) ? damageTaken / 2 : damageTaken;
             Console.Clear();
-            Program.Print("As you walk through a narrow corridor.\nSuddenly, the floor gives way beneath you, revealing a hidden pitfall trap!");
+            Program.Print("As you walk through a narrow corridor.\nSuddenly, the floor gives way beneath you, revealing a primitive pitfall trap!");
             Console.ReadKey();
             Program.currentPlayer.health -= damageTaken;
             Program.Print($"You fall into the pit, taking {damageTaken} damage!");
@@ -38,8 +38,51 @@ namespace Trollhall
         // Lore Encounters ------------------------------------------------------------------------------ Lore Encounters //
         private static void FirebrandBreweryEncounter()
         {
+            Console.Clear();
+            Program.Print("You enter the ancient Firebrand Brewery,\nonce renowned for its Firebrand Brandy.\nThe air is thick with the scent of fermented ingredients, and\nremnants of barrels and brewing equipment are scattered around.\n");
+            Program.Print("What would you like to do?\n");
+            Program.Print("1. Investigate the brewing equipment.");
+            Program.Print("2. Sample a mysterious brew left on the counter.");
+            Program.Print("3. Continue exploring Trollhalls.");
 
+            string playerChoice = Console.ReadLine();
+
+            switch (playerChoice)
+            {
+                case "1":
+                    Program.Print("You carefully examine the brewing equipment, discovering a hidden compartment with valuable brewing ingredients.");
+                    int rewardCoins = Program.currentPlayer.GetCoins() * 4;
+                    Program.currentPlayer.coins += rewardCoins;
+                    Program.Print($"You find {rewardCoins} coins worth!");
+                    Console.ReadKey();
+                    break;
+
+                case "2":
+                    Program.Print("Curiosity gets the better of you, and\nyou decide to sample the mysterious brew.\nThe brew has an unexpected kick, you feel a surge of energy!");
+                    int rewardXP = Program.currentPlayer.GetXP() * 4;
+                    Program.currentPlayer.xp += rewardXP;
+                    Program.Print($"You've gained {rewardXP} experience points!");
+                    if (Program.currentPlayer.CanLevelUp())
+                    {
+                        Program.currentPlayer.LevelUp();
+                    }
+                    Console.ReadKey();
+                    break;
+
+                case "3":
+                    Program.Print("You decide to continue exploring Trollhalls, leaving the Firebrand Brewery behind.");
+                    Console.ReadKey();
+                    break;
+
+                default:
+                    Program.Print("Invalid choice. Please choose a valid option.");
+                    Console.ReadKey();
+                    FirebrandBreweryEncounter();
+                    break;
+            }
+            RandomEncounter();
         }
+
         // Riddle Encounters -------------------------------------------------------------------------- Riddle Encounters //
         private static void DwarfPuzzleEncounter()
         {
@@ -98,7 +141,7 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 2))
+            switch (rand.Next(1, 2))
             {
                 //case 0:
                 //    TrollBehemothEncounter();
@@ -106,8 +149,11 @@ namespace Trollhall
                 //case 1:
                 //    DwarfClericEncounter();
                 //    break;
+                //case 2:
+                //    PitfallTrapEncounter();
+                //    break;
                 case 1:
-                    PitfallTrapEncounter();
+                    FirebrandBreweryEncounter();
                     break;
                 default:
                     basicFightEncounter();

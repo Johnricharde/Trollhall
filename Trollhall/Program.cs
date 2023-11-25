@@ -222,8 +222,7 @@ namespace Trollhall
                     Console.Write("░");
             }
         }
-        // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
-        // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
+        // PlaySoundEffect() --------------------------------------------------------------------------------- PlaySoundEffect() //
         public static void PlaySoundEffect(string soundFile)
         {
             WaveOutEvent sound = new WaveOutEvent();
