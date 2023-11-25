@@ -81,8 +81,15 @@ namespace Trollhall
             }
             Program.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Program.Print($"You gained a level!\nYou're level is now {level}");
+            Program.Print($"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
+        }
+        public void playerDeath(string deathMessage)
+        {
+            Program.PlaySoundEffect("player-death");
+            Program.Print($"{deathMessage}\nYou are dead...");
+            Console.ReadKey();
+            System.Environment.Exit(0);
         }
     }
 }

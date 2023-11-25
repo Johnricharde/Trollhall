@@ -6,6 +6,7 @@ using System.Media;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Trollhall
 {
@@ -14,9 +15,25 @@ namespace Trollhall
         static Random rand = new Random();
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         // Trap Encounters ------------------------------------------------------------------------------ Trap Encounters //
-        private static void TrollSpikeTrapEncounter()
+        private static void PitfallTrapEncounter()
         {
-
+            int damageTaken = Program.currentPlayer.GetPower();
+            damageTaken = (Program.currentPlayer.currentClass == Player.PlayerClass.Ranger) ? damageTaken / 2 : damageTaken;
+            Console.Clear();
+            Program.Print("As you walk through a narrow corridor.\nSuddenly, the floor gives way beneath you, revealing a hidden pitfall trap!");
+            Console.ReadKey();
+            Program.currentPlayer.health -= damageTaken;
+            Program.Print($"You fall into the pit, taking {damageTaken} damage!");
+            if (Program.currentPlayer.health > 0)
+            {
+                Program.Print("Luckily, you manage to climb out of the pit and continue cautiously.");
+                Console.ReadKey();
+                RandomEncounter();
+            }
+            else
+            {
+                Program.currentPlayer.playerDeath("The fall was too much for you, and you succumb to your injuries.");
+            }
         }
         // Lore Encounters ------------------------------------------------------------------------------ Lore Encounters //
         private static void FirebrandBreweryEncounter()
@@ -44,7 +61,7 @@ namespace Trollhall
             {
                 int coins = Program.currentPlayer.GetCoins() * 3;
                 Program.currentPlayer.coins += coins;
-                Program.Print($"You politely decline his offer.\nHe insists that you at least accept gold to help\nhelp you on your quest.\nYou've gained {coins}!");
+                Program.Print($"You politely decline his offer.\nHe insists that you at least accept gold to help\nhelp you on your quest.\nYou've gained {coins} coins!");
                 Console.ReadKey();
             }
             RandomEncounter();
@@ -81,13 +98,16 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(0, 3))
+            switch (rand.Next(0, 2))
             {
                 //case 0:
                 //    TrollBehemothEncounter();
                 //    break;
+                //case 1:
+                //    DwarfClericEncounter();
+                //    break;
                 case 1:
-                    DwarfClericEncounter();
+                    PitfallTrapEncounter();
                     break;
                 default:
                     basicFightEncounter();

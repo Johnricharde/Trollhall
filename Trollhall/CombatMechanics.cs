@@ -44,8 +44,8 @@ namespace Trollhall
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
                     // ATTACK ------------------------------------------------------------------------------------ ATTACK //
-                    int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     Program.PlaySoundEffect("attack");
+                    int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) +
@@ -116,10 +116,7 @@ namespace Trollhall
                 if (Program.currentPlayer.health <= 0)
                 {
                     // Player dies
-                    Program.PlaySoundEffect("player-death");
-                    Program.Print($"You have been slain by the {enemyName}.\nYou are dead...");
-                    Console.ReadKey();
-                    System.Environment.Exit(0);
+                    Program.currentPlayer.playerDeath($"You were slain by {enemyName}");
                 }
                 Console.ReadKey();
             }
