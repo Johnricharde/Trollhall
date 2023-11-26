@@ -109,6 +109,39 @@ namespace Trollhall
             }
             RandomEncounter();
         }
+        private static void BlacksmithEncounter()
+        {
+            Console.Clear();
+            Console.WriteLine("As you explore Trollhall, you come across a dimly lit chamber.\nThe sound of clanging metal draws your attention.\nPeeking inside,\nyou find a dwarven blacksmith huddled in the corner,\nsurrounded by makeshift barricades.\n");
+            Program.Print("The blacksmith notices you and speaks:");
+            Program.Print("\"Welcome, traveler!\nThese trolls have wreaked havoc,\nbut I've managed to hold my ground here.\"\n");
+            Program.Print("\"I appreciate your presence.\nAs a token of gratitude, I can offer you one free upgrade.\"\n");
+            Program.Print(" [1] Upgrade armor");
+            Program.Print(" [2] Upgrade weapon");
+            string upgradeChoice = Console.ReadLine();
+
+            switch (upgradeChoice)
+            {
+                case "1":
+                    Program.currentPlayer.armorValue++;
+                    Program.Print($"The blacksmith examines your armor and performs a skilled upgrade for free.\nYour armor has been upgraded!\nNew armor value: {Program.currentPlayer.armorValue - 1}");
+                    break;
+
+                case "2":
+                    Program.currentPlayer.weaponValue++;
+                    Program.Print($"The blacksmith inspects your weapon and enhances it\nwith expert craftsmanship at no cost.\nYour weapon has been upgraded!\nNew weapon value: {Program.currentPlayer.weaponValue - 1}");
+                    break;
+
+                default:
+                    Program.Print("Invalid choice. The blacksmith looks confused.");
+                    Console.ReadKey();
+                    DwarvenBlacksmithEncounter();
+                    break;
+            }
+
+            Console.ReadKey();
+            RandomEncounter();
+        }
         private static void SocialEncounter()
         {
             Console.Clear();
@@ -141,7 +174,7 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(1, 2))
+            switch (rand.Next(1, 4))
             {
                 //case 0:
                 //    TrollBehemothEncounter();
@@ -153,7 +186,8 @@ namespace Trollhall
                 //    PitfallTrapEncounter();
                 //    break;
                 case 1:
-                    FirebrandBreweryEncounter();
+                    //FirebrandBreweryEncounter();
+                    BlacksmithEncounter();
                     break;
                 default:
                     basicFightEncounter();

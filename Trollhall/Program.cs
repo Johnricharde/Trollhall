@@ -196,7 +196,7 @@ namespace Trollhall
         }
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect
-        public static void Print(string text, int speed = 5)
+        public static void Print(string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));
