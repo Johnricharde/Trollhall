@@ -54,6 +54,7 @@ namespace Trollhall
             int lower = (10 * difficultyMod + 10);
             return rand.Next(lower, upper);
         }
+
         public int GetXP()
         {
             int upper = (20 * difficultyMod + 50);
@@ -84,6 +85,7 @@ namespace Trollhall
             Program.Print(false, $"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
         }
+
         public void playerDeath(string deathMessage)
         {
             Program.PlaySoundEffect("player-death");

@@ -19,7 +19,7 @@ namespace Trollhall
             int enemyHealth = 0;
             if (random)
             {
-                enemyName = Encounters.GetName();
+                enemyName = Encounters.GetRandomName();
                 enemyPower = Program.currentPlayer.GetPower();
                 enemyHealth = Program.currentPlayer.GetHealth();
             }
@@ -31,7 +31,7 @@ namespace Trollhall
             }
             while (enemyHealth > 0)
             {
-                // Combat UI //
+                    // COMBAT UI ------------------------------------------------------------------------------ COMBAT UI //
                 Console.Clear();
                 Console.WriteLine($" ENEMY: {enemyName.ToUpper()}");
                 Console.WriteLine($" Power: {enemyPower} / Health: {enemyHealth}\n");

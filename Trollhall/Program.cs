@@ -192,7 +192,7 @@ namespace Trollhall
             }
         }
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
-        // Basically just Console.Write() but with a delay and sound effect
+        // Basically just Console.Write() but with a delay and sound effect //
         public static void Print(bool waitForInput, string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();

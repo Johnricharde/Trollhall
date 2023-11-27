@@ -19,28 +19,32 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(1, 3))
+            switch (rand.Next(1, 15))
             {
-                //case 0:
-                //    TrollBehemothEncounter();
-                //    break;
-                //case 1:
-                //    DwarfClericEncounter();
-                //    break;
-                //case 2:
-                //    PitfallTrapEncounter();
-                //    break;
+                case 0:
+                    TrollBehemothEncounter();
+                    break;
                 case 1:
-                //FirebrandBreweryEncounter();
-                //BlacksmithEncounter();
+                    DwarfClericEncounter();
+                    break;
+                case 2:
+                    PitfallTrapEncounter();
+                    break;
+                case 3:
                     DwarvenPuzzleEncounter();
+                    break;
+                case 4:
+                    FirebrandBreweryEncounter();
+                    break;
+                case 5:
+                    BlacksmithEncounter();
                     break;
                 default:
                     basicFightEncounter();
                     break;
             }
         }
-        public static string GetName()
+        public static string GetRandomName()
         {
             switch (rand.Next(0, 5))
             {
@@ -58,13 +62,15 @@ namespace Trollhall
             return "Beast";
         }
 
+
+
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         // Trap Encounters ------------------------------------------------------------------------------ Trap Encounters //
         private static void PitfallTrapEncounter()
         {
+            Console.Clear();
             int damageTaken = Program.currentPlayer.GetPower();
             damageTaken = (Program.currentPlayer.currentClass == Player.PlayerClass.Ranger) ? damageTaken / 2 : damageTaken;
-            Console.Clear();
             Program.Print(true, "As you walk through a narrow corridor.\nSuddenly, the floor gives way beneath you, revealing a primitive pitfall trap!");
             Program.currentPlayer.health -= damageTaken;
             Program.Print(false, $"You fall into the pit, taking {damageTaken} damage!");
@@ -177,6 +183,7 @@ namespace Trollhall
         // Social Encounters -------------------------------------------------------------------------- Social Encounters //
         private static void DwarfClericEncounter()
         {
+            Console.Clear();
             Program.Print(false, "You meet a Dwarf cleric who offers you a blessing.\nDo you accept? [y/n]");
             if (Console.ReadLine() == "y")
             {
