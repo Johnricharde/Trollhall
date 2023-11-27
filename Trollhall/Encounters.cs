@@ -1,8 +1,10 @@
 ﻿using NAudio.Wave;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Media;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +19,7 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public static void RandomEncounter()
         {
-            switch (rand.Next(1, 4))
+            switch (rand.Next(1, 3))
             {
                 //case 0:
                 //    TrollBehemothEncounter();
@@ -28,10 +30,11 @@ namespace Trollhall
                 //case 2:
                 //    PitfallTrapEncounter();
                 //    break;
-                //case 1:
-                    //FirebrandBreweryEncounter();
-                    //BlacksmithEncounter();
-                    //break;
+                case 1:
+                //FirebrandBreweryEncounter();
+                //BlacksmithEncounter();
+                    DwarvenPuzzleEncounter();
+                    break;
                 default:
                     basicFightEncounter();
                     break;
@@ -102,9 +105,7 @@ namespace Trollhall
                     Program.currentPlayer.xp += rewardXP;
                     Program.Print(false, $"You've gained {rewardXP} experience points!");
                     if (Program.currentPlayer.CanLevelUp())
-                    {
                         Program.currentPlayer.LevelUp();
-                    }
                     Console.ReadKey();
                     break;
 
@@ -121,10 +122,58 @@ namespace Trollhall
         }
 
         // Riddle Encounters -------------------------------------------------------------------------- Riddle Encounters //
-        private static void DwarfPuzzleEncounter()
+        private static void DwarvenPuzzleEncounter()
         {
+            Console.Clear();
+            Program.Print(false, "You come across a chamber with an intricate dwarven puzzle.\nIt's unclear how to unlock the passage...\n");
+            Program.Print(false, " [1] Examine the puzzle and try to solve it.");
+            Program.Print(false, " [2] Attempt to brute force the puzzle.\n");
+            string playerChoice = Console.ReadLine();
 
+            switch (playerChoice)
+            {
+                case "1":
+                    Program.Print(true, "You carefully examine the dwarven puzzle,\nanalyzing the symbols and their arrangement.\n");
+                    if (rand.Next(0, 2) == 0)
+                    {
+                        Program.Print(true, "After some thought,\nyou successfully decipher the pattern and unlock the passage.");
+                        SolvedPuzzle();
+                    }
+                    else
+                        Program.Print(false, "Despite your efforts,\nthe puzzle remains unsolved.\nThe symbols resist your attempts.");
+                    break;
+
+                case "2":
+                    Program.Print(true, "You decide to take a more direct approach and\nattempt to brute force the puzzle with you strength.\n");
+                    if (rand.Next(0, (Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 4 : 2) == 0)
+                    {
+                        Program.Print(true, "Through trial and error,\nyou manage to brute force the puzzle and unlock the passage.");
+                        SolvedPuzzle();
+                    }
+                    else
+                        Program.Print(false, "Despite your persistent attempts,\nthe puzzle seems resistant to brute force. \nIt remains unsolved.");
+                    break;
+
+                default:
+                    Program.Print(true, "Invalid choice. The puzzle remains unsolved.");
+                    DwarvenPuzzleEncounter();
+                    break;
+            }
+            void SolvedPuzzle()
+            {
+                int coins = Program.currentPlayer.GetCoins() * Program.currentPlayer.difficultyMod;
+                int experience = Program.currentPlayer.GetXP() * Program.currentPlayer.difficultyMod;
+                Program.Print(false, $"\nWithin the passage you find treasure!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
+                Program.currentPlayer.coins += coins;
+                Program.currentPlayer.xp += experience;
+                if (Program.currentPlayer.CanLevelUp())
+                    Program.currentPlayer.LevelUp();
+            }
+
+            Console.ReadKey();
+            RandomEncounter();
         }
+
         // Social Encounters -------------------------------------------------------------------------- Social Encounters //
         private static void DwarfClericEncounter()
         {

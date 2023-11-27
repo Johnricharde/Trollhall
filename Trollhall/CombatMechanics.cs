@@ -127,6 +127,7 @@ namespace Trollhall
                         Program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
+
                     // Player dies //
                 if (Program.currentPlayer.health <= 0)
                 {
