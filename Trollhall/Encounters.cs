@@ -12,7 +12,7 @@ namespace Trollhall
 {
     public class Encounters
     {
-        static Random rand = new Random();
+        private static Random rand = new Random();
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         // Trap Encounters ------------------------------------------------------------------------------ Trap Encounters //
         private static void PitfallTrapEncounter()
@@ -112,10 +112,7 @@ namespace Trollhall
         private static void BlacksmithEncounter()
         {
             Console.Clear();
-            Console.WriteLine("As you explore Trollhall, you come across a dimly lit chamber.\nThe sound of clanging metal draws your attention.\nPeeking inside,\nyou find a dwarven blacksmith huddled in the corner,\nsurrounded by makeshift barricades.\n");
-            Program.Print("The blacksmith notices you and speaks:");
-            Program.Print("\"Welcome, traveler!\nThese trolls have wreaked havoc,\nbut I've managed to hold my ground here.\"\n");
-            Program.Print("\"I appreciate your presence.\nAs a token of gratitude, I can offer you one free upgrade.\"\n");
+            Program.Print("You come across a hidden chamber.\nYou enter and find a dwarven blacksmith huddled in the corner,\nsurrounded by makeshift barricades.\nThe blacksmith, happy to see a friendly face, offers you his services:\n");
             Program.Print(" [1] Upgrade armor");
             Program.Print(" [2] Upgrade weapon");
             string upgradeChoice = Console.ReadLine();
@@ -124,18 +121,18 @@ namespace Trollhall
             {
                 case "1":
                     Program.currentPlayer.armorValue++;
-                    Program.Print($"The blacksmith examines your armor and performs a skilled upgrade for free.\nYour armor has been upgraded!\nNew armor value: {Program.currentPlayer.armorValue - 1}");
+                    Program.Print($"The blacksmith takes the armor and enhances it.\nYour armor has been upgraded!\nNew armor value: {Program.currentPlayer.armorValue - 1}");
                     break;
 
                 case "2":
                     Program.currentPlayer.weaponValue++;
-                    Program.Print($"The blacksmith inspects your weapon and enhances it\nwith expert craftsmanship at no cost.\nYour weapon has been upgraded!\nNew weapon value: {Program.currentPlayer.weaponValue - 1}");
+                    Program.Print($"The blacksmith takes the weapon and enhances it.\nYour weapon has been upgraded!\nNew weapon value: {Program.currentPlayer.weaponValue - 1}");
                     break;
 
                 default:
                     Program.Print("Invalid choice. The blacksmith looks confused.");
                     Console.ReadKey();
-                    DwarvenBlacksmithEncounter();
+                    BlacksmithEncounter();
                     break;
             }
 

@@ -3,6 +3,7 @@ using NAudio.Wave;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace Trollhall
 {
     internal class CombatMechanics
     {
-        static Random rand = new Random();
+        private static Random rand = new Random();
         public static void Combat(bool random, string name, int power, int health)
         {
             string enemyName = "";
@@ -31,15 +32,18 @@ namespace Trollhall
             while (enemyHealth > 0)
             {
                 Console.Clear();
-                Console.WriteLine($"ENEMY: {enemyName}");
-                Console.WriteLine($"Power: {enemyPower} / Health: {enemyHealth}\n");
+                Console.WriteLine($" ENEMY: {enemyName.ToUpper()}");
+                Console.WriteLine($" Power: {enemyPower} / Health: {enemyHealth}\n");
                 Console.WriteLine("=======================");
                 Console.WriteLine("| [A]ttack | [D]efend |");
                 Console.WriteLine("| [R]un    | [H]eal   |");
-                Console.WriteLine("=======================\n");
-                Console.WriteLine($"PLAYER:  {Program.currentPlayer.name}");
-                Console.WriteLine($"Health:  {Program.currentPlayer.health}/{Program.currentPlayer.maxHealth}");
-                Console.WriteLine($"Potions: {Program.currentPlayer.potions}\n");
+                Console.WriteLine("=======================");
+                Console.Write("|");
+                Program.ExperienceBar("▓", ((decimal)Program.currentPlayer.xp / (decimal)Program.currentPlayer.GetLevelUpValue()), 25);
+                Console.WriteLine($"|Lvl: {Program.currentPlayer.level}\n");
+                Console.WriteLine($" PLAYER:  {Program.currentPlayer.name.ToUpper()}");
+                Console.WriteLine($" Health:  {Program.currentPlayer.health}/{Program.currentPlayer.maxHealth}");
+                Console.WriteLine($" Potions: {Program.currentPlayer.potions}\n");
                 string input = Console.ReadLine();
                     // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                 if (input.ToLower() == "a" || input.ToLower() == "attack")

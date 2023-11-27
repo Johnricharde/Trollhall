@@ -11,7 +11,7 @@ namespace Trollhall
     [Serializable]
     public class Player
     {
-        Random rand = new Random();
+        private Random rand = new Random();
 
         public string name = "Bomli Bronzebottom";
         public int id;
