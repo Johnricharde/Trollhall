@@ -41,12 +41,12 @@ namespace Trollhall
         {
             Console.Clear();
             Player player = new Player();
-            Print("Enter your name:");
+            Print(false, "Enter your name:");
             player.name = Console.ReadLine();
             player.id = id;
             while (player.name == "")
                 player.name = Console.ReadLine();
-            Print("Choose a class:\n [W]arriors boast great strength\n [R]angers are quick on their feet\n [C]lerics recieve great blessings");
+            Print(false, "Choose a class:\n [W]arriors boast great strength\n [R]angers are quick on their feet\n [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
             {
@@ -60,16 +60,15 @@ namespace Trollhall
                     player.currentClass = Player.PlayerClass.Cleric;
                 else
                 {
-                    Print("Not a valid class, please choose a class");
+                    Print(false, "Not a valid class, please choose a class");
                     flag = false;
                 }
                 
             }
             Console.Clear();
-            Print($"You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
-            Console.ReadKey();
+            Print(true, $"You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
             Console.Clear();
-            Print("You encounter a troll!");
+            Print(false, "You encounter a troll!");
             return player;
         }
         // Quit() ------------------------------------------------------------------------------------------------------- Quit() //
@@ -116,14 +115,14 @@ namespace Trollhall
             while (true)
             {
                 Console.Clear();
-                Print("Square brackets \"[]\" signify a valid input\n");
+                Print(false, "Square brackets \"[]\" signify a valid input\n");
 
                 foreach (Player player in players)
                 {
-                    Print($" [{player.id + 1}] {player.name} the {player.currentClass}");
+                    Print(false, $" [{player.id + 1}] {player.name} the {player.currentClass}");
                 }
                 Console.WriteLine();
-                Print(" [C]reate a new character\n [D]elete a character\n");
+                Print(false, " [C]reate a new character\n [D]elete a character\n");
 
                 string userInput = Console.ReadLine().ToLower();
 
@@ -147,20 +146,18 @@ namespace Trollhall
                                 return player;
                             }
                         }
-                        Print("Couldn't find that id...");
-                        Console.ReadKey();
+                        Print(true, "Couldn't find that id...");
                     }
                     else
                     {
-                        Print("Couldn't find that name...");
-                        Console.ReadKey();
+                        Print(true, "Couldn't find that name...");
                     }
             }
         }
         // DeleteCharacter() --------------------------------------------------------------------------------- DeleteCharacter() //
         private static void DeleteCharacter(List<Player> players)
         {
-            Print("Which character do you want to delete?");
+            Print(false, "Which character do you want to delete?");
             int idToDelete;
 
             if (int.TryParse(Console.ReadLine(), out idToDelete))
@@ -169,34 +166,34 @@ namespace Trollhall
 
                 if (playerToDelete != null)
                 {
-                    Print($"Are you sure you want to delete {playerToDelete.name} the {playerToDelete.currentClass}? [y/n]");
+                    Print(false, $"Are you sure you want to delete {playerToDelete.name} the {playerToDelete.currentClass}? [y/n]");
                     string confirmation = Console.ReadLine().ToLower();
 
                     if (confirmation == "y" || confirmation == "yes")
                     {
                         string pathToDelete = $"saves/{playerToDelete.name}.json";
                         File.Delete(pathToDelete);
-                        Print($"Player {playerToDelete.name} deleted successfully.");
+                        Print(false, $"Player {playerToDelete.name} deleted successfully.");
                         Load(out bool isNewPlayer);
                     }
                     else
                     {
-                        Print("Deletion canceled.");
+                        Print(false, "Deletion canceled.");
                     }
                 }
                 else
                 {
-                    Print("Invalid ID. Please enter a valid character ID.");
+                    Print(false, "Invalid ID. Please enter a valid character ID.");
                 }
             }
             else
             {
-                Print("Invalid input. Please enter a valid character ID.");
+                Print(false, "Invalid input. Please enter a valid character ID.");
             }
         }
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect
-        public static void Print(string text, int speed = 1)
+        public static void Print(bool waitForInput, string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));
@@ -209,6 +206,10 @@ namespace Trollhall
             Console.WriteLine();
             typing.Stop();
             typing.Dispose();
+            if (waitForInput)
+            {
+                Console.ReadKey();
+            }
         }
         // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
         public static void ExperienceBar(string fillerChar, decimal value, int size)
@@ -217,7 +218,11 @@ namespace Trollhall
             for (int i = 0; i < size; i++) 
             {
                 if (i < differentiator)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.Write(fillerChar);
+                    Console.ResetColor();
+                }
                 else
                     Console.Write("░");
             }

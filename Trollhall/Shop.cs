@@ -85,8 +85,7 @@ namespace Trollhall
             }
             else
             {
-                Program.Print("You don't have enough gold!");
-                Console.ReadKey();
+                Program.Print(true, "You don't have enough gold!");
             }
         }
 
