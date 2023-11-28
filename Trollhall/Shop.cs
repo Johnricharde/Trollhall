@@ -10,12 +10,11 @@ namespace Trollhall
     public class Shop
     {
 
-        public static void LoadShop(Player player, Program Game)
+        public static void LoadShop(Player player)
         {
-            Shop shop = new Shop();
-            RunShop(player, shop, Game);
+            RunShop(player);
         }
-        private static void RunShop(Player player, Shop shop, Program Game)
+        public static void RunShop(Player player)
         {
             int weaponPrice;
             int armorPrice;
@@ -34,10 +33,10 @@ namespace Trollhall
                 Console.WriteLine("       VILLAGE SHOP        ");
                 Console.WriteLine("===========================");
                 Console.WriteLine($"        GOLD: £{player.coins}\n");
-                Console.WriteLine($" [W]eapon:            £{weaponPrice}");
-                Console.WriteLine($" [A]rmor:             £{armorPrice}");
-                Console.WriteLine($" [P]otion:            £{potionPrice}");
-                Console.WriteLine($" [D]ifficulty:        £{difficultyPrice}");
+                Console.WriteLine($" [W]eapon:             {weaponPrice}");
+                Console.WriteLine($" [A]rmor:              {armorPrice}");
+                Console.WriteLine($" [P]otion:             {potionPrice}");
+                Console.WriteLine($" [D]ifficulty:         {difficultyPrice}");
                 Console.WriteLine("===========================");
                 Console.WriteLine("       PLAYER STATS        ");
                 Console.WriteLine("===========================");
@@ -57,20 +56,20 @@ namespace Trollhall
                 string input = Console.ReadLine().ToLower();
 
                 if (input == "w" || input == "weapon")
-                    shop.TryBuy("weapon", weaponPrice, player);
+                    TryBuy("weapon", weaponPrice, player);
                 else if (input == "a" || input == "armor")
-                    shop.TryBuy("armor", armorPrice, player);
+                    TryBuy("armor", armorPrice, player);
                 else if (input == "p" || input == "potion")
-                    shop.TryBuy("potion", potionPrice, player);
+                    TryBuy("potion", potionPrice, player);
                 else if (input == "d" || input == "difficulty")
-                    shop.TryBuy("difficulty", difficultyPrice, player);
+                    TryBuy("difficulty", difficultyPrice, player);
                 else if (input == "s" || input == "save")
                     Program.Quit();
                 else if (input == "e" || input == "exit")
-                    Encounters.RandomEncounter(Game); 
+                    Encounters.RandomEncounter(); 
             }
         }
-        private void TryBuy(string item, int cost, Player player)
+        static void TryBuy(string item, int cost, Player player)
         {
             if(player.coins >= cost)
             {
