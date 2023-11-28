@@ -9,13 +9,12 @@ namespace Trollhall
 {
     public class Shop
     {
-        private static Program program = new Program();
 
-        public static void LoadShop(Program program, Player player)
+        public static void LoadShop(Player player)
         {
-            RunShop(program, player);
+            RunShop(player);
         }
-        public static void RunShop(Program program, Player player)
+        public static void RunShop(Player player)
         {
             int weaponPrice;
             int armorPrice;
@@ -48,7 +47,7 @@ namespace Trollhall
                 Console.WriteLine($" Armor         Mod:  + {player.armorValue}");
                 Console.WriteLine($" Difficulty    Mod:  + {player.difficultyMod}");
                 Console.Write("|");
-                program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
+                Program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {player.level}");
                 Console.WriteLine("===========================");
                 Console.WriteLine(" [E]xit shop");
@@ -65,9 +64,9 @@ namespace Trollhall
                 else if (input == "d" || input == "difficulty")
                     TryBuy("difficulty", difficultyPrice, player);
                 else if (input == "s" || input == "save")
-                    program.Quit();
+                    Program.Quit();
                 else if (input == "e" || input == "exit")
-                    Encounters.RandomEncounter(program); 
+                    Encounters.RandomEncounter(); 
             }
         }
         static void TryBuy(string item, int cost, Player player)
@@ -86,7 +85,7 @@ namespace Trollhall
             }
             else
             {
-                program.Print(true, "You don't have enough gold!");
+                Program.Print(true, "You don't have enough gold!");
             }
         }
 

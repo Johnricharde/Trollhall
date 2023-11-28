@@ -12,7 +12,6 @@ namespace Trollhall
     public class Player
     {
         private Random rand = new Random();
-        private static Program program = new Program();
 
         public string name = "Bomli Bronzebottom";
         public int id;
@@ -73,7 +72,6 @@ namespace Trollhall
             else
                 return false;
         }
-
         public void LevelUp()
         {
             maxHealth += 5;
@@ -82,17 +80,17 @@ namespace Trollhall
                 xp -= GetLevelUpValue();
                 level++;
             }
-            program.PlaySoundEffect("level-up");
+            Program.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            program.Print(false, $"You gained a level!\nYou're level is now {level}.");
+            Program.Print(false, $"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
         }
 
         public void playerDeath(string deathMessage)
         {
-            program.PlaySoundEffect("player-death");
+            Program.PlaySoundEffect("player-death");
             Console.ForegroundColor = ConsoleColor.Red;
-            program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
+            Program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
             Console.ResetColor();
             System.Environment.Exit(0);
         }
