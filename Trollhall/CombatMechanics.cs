@@ -12,7 +12,7 @@ namespace Trollhall
     internal class CombatMechanics
     {
         private static Random rand = new Random();
-        public static void Combat(bool random, string name, int power, int health)
+        public static void Combat(bool random, string name, int power, int health, Program Game)
         {
             string enemyName = "";
             int enemyPower = 0;
@@ -99,7 +99,7 @@ namespace Trollhall
                     {
                         Program.PlaySoundEffect("run-away");
                         Program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
-                        Shop.LoadShop(Program.currentPlayer);
+                        Shop.LoadShop(Program.currentPlayer, Game);
                     }
                 }
                     // HEAL ---------------------------------------------------------------------------------------- HEAL //
@@ -148,7 +148,7 @@ namespace Trollhall
                 Program.currentPlayer.LevelUp();
             }
             Console.ReadKey();
-            Encounters.RandomEncounter();
+            Encounters.RandomEncounter(Game);
 
         }
 

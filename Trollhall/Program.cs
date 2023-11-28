@@ -21,6 +21,7 @@ namespace Trollhall
         // Main() ------------------------------------------------------------------------------------------------------- Main() //
         static void Main(string[] args)
         {
+            Program Game = new Program();
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
             backgroundMusic.PlayLooping();
 
@@ -30,10 +31,10 @@ namespace Trollhall
             }
             currentPlayer = Load(out bool isNewPlayer);
             if (isNewPlayer)
-                Encounters.FirstEncounter();
+                Encounters.FirstEncounter(Game);
             while (mainLoop)
             {
-                Encounters.RandomEncounter();
+                Encounters.RandomEncounter(Game);
             }
         }
         // NewStart() ----------------------------------------------------------------------------------------------- NewStart() //

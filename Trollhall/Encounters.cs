@@ -17,30 +17,30 @@ namespace Trollhall
         private static Random rand = new Random();
 
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
-        public static void RandomEncounter()
+        public static void RandomEncounter(Program Game)
         {
-            switch (rand.Next(1, 15))
+            switch (rand.Next(0, 15))
             {
-                case 0:
-                    TrollBehemothEncounter();
-                    break;
-                case 1:
-                    DwarfClericEncounter();
-                    break;
-                case 2:
-                    PitfallTrapEncounter();
-                    break;
-                case 3:
-                    DwarvenPuzzleEncounter();
-                    break;
-                case 4:
-                    FirebrandBreweryEncounter();
-                    break;
-                case 5:
-                    BlacksmithEncounter();
-                    break;
+                //case 0:
+                //    TrollBehemothEncounter();
+                //    break;
+                //case 1:
+                //    DwarfClericEncounter();
+                //    break;
+                //case 2:
+                //    PitfallTrapEncounter();
+                //    break;
+                //case 3:
+                //    DwarvenPuzzleEncounter();
+                //    break;
+                //case 4:
+                //    FirebrandBreweryEncounter();
+                //    break;
+                //case 5:
+                //    BlacksmithEncounter();
+                //    break;
                 default:
-                    basicFightEncounter();
+                    basicFightEncounter(Game);
                     break;
             }
         }
@@ -66,7 +66,7 @@ namespace Trollhall
 
         // ENCOUNTERS ---------------------------------------------------------------------------------------- ENCOUNTERS //
         // Trap Encounters ------------------------------------------------------------------------------ Trap Encounters //
-        private static void PitfallTrapEncounter()
+        private static void PitfallTrapEncounter(Program Game)
         {
             Console.Clear();
             int damageTaken = Program.currentPlayer.GetPower();
@@ -77,7 +77,7 @@ namespace Trollhall
             if (Program.currentPlayer.health > 0)
             {
                 Program.Print(true, "Luckily, you manage to climb out of the pit and continue cautiously.");
-                RandomEncounter();
+                RandomEncounter(Game);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace Trollhall
             }
         }
         // Lore Encounters ------------------------------------------------------------------------------ Lore Encounters //
-        private static void FirebrandBreweryEncounter()
+        private static void FirebrandBreweryEncounter(Program Game)
         {
             Console.Clear();
             Program.Print(false, "You enter the ancient Firebrand Brewery,\nonce renowned for its Firebrand Brandy.\nThe air is thick with the scent of fermented ingredients, and\nremnants of barrels and brewing equipment are scattered around.\n");
@@ -121,14 +121,14 @@ namespace Trollhall
 
                 default:
                     Program.Print(true, "Invalid choice. Please choose a valid option.");
-                    FirebrandBreweryEncounter();
+                    FirebrandBreweryEncounter(Game);
                     break;
             }
-            RandomEncounter();
+            RandomEncounter(Game);
         }
 
         // Riddle Encounters -------------------------------------------------------------------------- Riddle Encounters //
-        private static void DwarvenPuzzleEncounter()
+        private static void DwarvenPuzzleEncounter(Program Game)
         {
             Console.Clear();
             Program.Print(false, "You come across a chamber with an intricate dwarven puzzle.\nIt's unclear how to unlock the passage...\n");
@@ -162,7 +162,7 @@ namespace Trollhall
 
                 default:
                     Program.Print(true, "Invalid choice. The puzzle remains unsolved.");
-                    DwarvenPuzzleEncounter();
+                    DwarvenPuzzleEncounter(Game);
                     break;
             }
             void SolvedPuzzle()
@@ -177,11 +177,11 @@ namespace Trollhall
             }
 
             Console.ReadKey();
-            RandomEncounter();
+            RandomEncounter(Game);
         }
 
         // Social Encounters -------------------------------------------------------------------------- Social Encounters //
-        private static void DwarfClericEncounter()
+        private static void DwarfClericEncounter(Program Game)
         {
             Console.Clear();
             Program.Print(false, "You meet a Dwarf cleric who offers you a blessing.\nDo you accept? [y/n]");
@@ -197,9 +197,9 @@ namespace Trollhall
                 Program.currentPlayer.coins += coins;
                 Program.Print(true, $"You politely decline his offer.\nHe insists that you at least accept gold to\nhelp you on your quest.\nYou've gained {coins} coins!");
             }
-            RandomEncounter();
+            RandomEncounter(Game);
         }
-        private static void BlacksmithEncounter()
+        private static void BlacksmithEncounter(Program Game)
         {
             Console.Clear();
             Program.Print(false, "You come across a hidden chamber.\nYou enter and find a dwarven blacksmith huddled in the corner,\nsurrounded by makeshift barricades.\nThe blacksmith, happy to see a friendly face, offers you his services:\n");
@@ -221,30 +221,30 @@ namespace Trollhall
 
                 default:
                     Program.Print(true, "Invalid choice. The blacksmith looks confused.");
-                    BlacksmithEncounter();
+                    BlacksmithEncounter(Game);
                     break;
             }
 
             Console.ReadKey();
-            RandomEncounter();
+            RandomEncounter(Game);
         }
         // Combat Encounters -------------------------------------------------------------------------- Combat Encounters //
-        public static void FirstEncounter()
+        public static void FirstEncounter(Program Game)
         {
             Program.Print(true, "It's at death's door.\nAn open wound is exposing it's innards.\nIt would probably die of it's own, but why risk it?");
-            CombatMechanics.Combat(false, "Half-Dead Troll", 1, 20);
+            CombatMechanics.Combat(false, "Half-Dead Troll", 1, 20, Game);
         }
-        private static void TrollBehemothEncounter()
+        private static void TrollBehemothEncounter(Program Game)
         { 
             Console.Clear();
             Program.Print(true, "A troll behemoth has found you!\nIt looms over you, thrice your size.\nThese monstrosities were the backbone of the troll invasion force\nthat reclaimed the Trollhalls...\n\nIt might be wise to run...");
-            CombatMechanics.Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100);
+            CombatMechanics.Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100, Game);
         }
-        private static void basicFightEncounter()
+        private static void basicFightEncounter(Program Game)
         {
             Console.Clear();
             Program.Print(true, $"You encounter an enemy!");
-            CombatMechanics.Combat(true, "", 0, 0);
+            CombatMechanics.Combat(true, "", 0, 0, Game);
         }
 
 
