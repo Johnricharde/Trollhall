@@ -57,20 +57,20 @@ namespace Trollhall
                 string input = Console.ReadLine().ToLower();
 
                 if (input == "w" || input == "weapon")
-                    shop.TryBuy("weapon", weaponPrice, player);
+                    shop.TryBuy("weapon", weaponPrice, player, Game);
                 else if (input == "a" || input == "armor")
-                    shop.TryBuy("armor", armorPrice, player);
+                    shop.TryBuy("armor", armorPrice, player, Game);
                 else if (input == "p" || input == "potion")
-                    shop.TryBuy("potion", potionPrice, player);
+                    shop.TryBuy("potion", potionPrice, player, Game);
                 else if (input == "d" || input == "difficulty")
-                    shop.TryBuy("difficulty", difficultyPrice, player);
+                    shop.TryBuy("difficulty", difficultyPrice, player, Game);
                 else if (input == "s" || input == "save")
                     Program.Quit();
                 else if (input == "e" || input == "exit")
                     Encounters.RandomEncounter(Game); 
             }
         }
-        private void TryBuy(string item, int cost, Player player)
+        private void TryBuy(string item, int cost, Player player, Program Game)
         {
             if(player.coins >= cost)
             {
@@ -86,7 +86,7 @@ namespace Trollhall
             }
             else
             {
-                Program.Print(true, "You don't have enough gold!");
+                Game.Print(true, "You don't have enough gold!");
             }
         }
 

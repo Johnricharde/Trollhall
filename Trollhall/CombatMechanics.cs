@@ -68,7 +68,7 @@ namespace Trollhall
                         ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    Game.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                     // DEFEND ------------------------------------------------------------------------------------ DEFEND //
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
@@ -80,7 +80,7 @@ namespace Trollhall
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    Game.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                     // RUN ------------------------------------------------------------------------------------------ RUN //
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
@@ -92,13 +92,13 @@ namespace Trollhall
                         if (enemyDmg < 0)
                             enemyDmg = 0;
                         Program.currentPlayer.health -= enemyDmg;
-                        Program.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
+                        Game.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
                     }
                     // Player runs away
                     else
                     {
                         Program.PlaySoundEffect("run-away");
-                        Program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
+                        Game.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
                         Shop.LoadShop(Program.currentPlayer, Game);
                     }
                 }
@@ -111,7 +111,7 @@ namespace Trollhall
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;
-                        Program.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
+                        Game.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
                     // Player has potion //
                     else
@@ -124,7 +124,7 @@ namespace Trollhall
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potions--;
                         Program.PlaySoundEffect("drink");
-                        Program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
+                        Game.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
 
@@ -140,7 +140,7 @@ namespace Trollhall
             int experience = Program.currentPlayer.GetXP();
 
             Program.PlaySoundEffect("enemy-death");
-            Program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
+            Game.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
             Program.currentPlayer.xp += experience;
             if (Program.currentPlayer.CanLevelUp())
