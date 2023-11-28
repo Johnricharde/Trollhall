@@ -72,7 +72,7 @@ namespace Trollhall
             else
                 return false;
         }
-        public void LevelUp(Program Game)
+        public void LevelUp()
         {
             maxHealth += 5;
             while (CanLevelUp())
@@ -82,15 +82,15 @@ namespace Trollhall
             }
             Program.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Game.Print(false, $"You gained a level!\nYou're level is now {level}.");
+            Program.Print(false, $"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
         }
 
-        public void playerDeath(string deathMessage, Program Game)
+        public void playerDeath(string deathMessage)
         {
             Program.PlaySoundEffect("player-death");
             Console.ForegroundColor = ConsoleColor.Red;
-            Game.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
+            Program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
             Console.ResetColor();
             System.Environment.Exit(0);
         }
