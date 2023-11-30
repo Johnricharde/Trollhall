@@ -5,7 +5,7 @@ namespace Trollhall
     [Serializable]
     public class Player
     {
-        private Random rand = new Random();
+        private Random _rand = new Random();
         private Program _program = new Program();
 
         public string _name = "Bomli Bronzebottom";
@@ -35,26 +35,26 @@ namespace Trollhall
         {
             int _upper = (2 * difficultyMod + 5);
             int _lower = (difficultyMod + 2);
-            return rand.Next(_lower, _upper);
+            return _rand.Next(_lower, _upper);
         }
         public int GetPower()
         {
             int _upper = (2 * difficultyMod + 2);
             int _lower = (difficultyMod + 1);
-            return rand.Next(_lower, _upper);
+            return _rand.Next(_lower, _upper);
         }
         public int GetCoins()
         {
             int _upper = (15 * difficultyMod + 50);
             int _lower = (10 * difficultyMod + 10);
-            return rand.Next(_lower, _upper);
+            return _rand.Next(_lower, _upper);
         }
 
         public int GetXP()
         {
             int _upper = (20 * difficultyMod + 50);
             int _lower = (15 * difficultyMod + 10);
-            return rand.Next(_lower, _upper);
+            return _rand.Next(_lower, _upper);
         }
         public int GetLevelUpValue()
         {

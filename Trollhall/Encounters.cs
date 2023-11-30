@@ -10,7 +10,7 @@ namespace Trollhall
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public void RandomEncounter()
         {
-            switch (_rand.Next(1, 15))
+            switch (_rand.Next(1, 50))
             {
                 case 0:
                     TrollBehemothEncounter();

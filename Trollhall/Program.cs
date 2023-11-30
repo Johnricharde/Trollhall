@@ -13,10 +13,10 @@ namespace Trollhall
         static void Main(string[] args)
         {
             var _program = new Program();
-            _program.Start();
+            _program.StartGame();
         }
         // Start() ----------------------------------------------------------------------------------------------------- Start() //
-        public void Start()
+        public void StartGame()
         {
             var _encounter = new Encounters();
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");

@@ -26,8 +26,38 @@ namespace Trollhall
             }
             while (enemyHealth > 0)
             {
-                    // COMBAT UI ------------------------------------------------------------------------------ COMBAT UI //
                 Console.Clear();
+
+                ShowCombatUI();
+
+
+                ChooseAction();
+
+                // Player dies //
+                if (Program.currentPlayer.health <= 0)
+                {
+                    Program.currentPlayer.playerDeath($"\nYou were slain by {enemyName}");
+                }
+                Console.ReadKey();
+            }
+            // Player wins combat //
+            int coins = Program.currentPlayer.GetCoins();
+            int experience = Program.currentPlayer.GetXP();
+
+            _program.PlaySoundEffect("enemy-death");
+            _program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
+            Program.currentPlayer.coins += coins;
+            Program.currentPlayer.xp += experience;
+            if (Program.currentPlayer.CanLevelUp())
+            {
+                Program.currentPlayer.LevelUp();
+            }
+            Console.ReadKey();
+            _encounter.RandomEncounter();
+
+            // COMBAT UI ------------------------------------------------------------------------------ COMBAT UI //
+            void ShowCombatUI()
+            {
                 Console.WriteLine($" ENEMY: {enemyName.ToUpper()}");
                 Console.WriteLine($" Power: {enemyPower} / Health: {enemyHealth}\n");
                 Console.WriteLine(" =======================");
@@ -50,102 +80,95 @@ namespace Trollhall
                     Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($" Potions: {Program.currentPlayer.potions}");
                 Console.ResetColor();
+            }
+            // CHOOSE ACTION ---------------------------------------------------------------------- CHOOSE ACTION //
+            void ChooseAction()
+            {
                 string input = Console.ReadLine();
 
-                    // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
+                    Attack();
+
+                else if (input.ToLower() == "d" || input.ToLower() == "defend")
+                    Defend();
+
+                else if (input.ToLower() == "r" || input.ToLower() == "run")
+                    Run();
+
+                else if (input.ToLower() == "h" || input.ToLower() == "heal")
+                    Heal();
+            }
+            // ATTACK ------------------------------------------------------------------------------------ ATTACK //
+            void Attack()
+            {
+                _program.PlaySoundEffect("attack");
+                int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
+                if (enemyDmg < 0)
+                    enemyDmg = 0;
+                int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) + _rand.Next(1, 4) +
+                    ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
+                enemyHealth -= playerDmg;
+                Program.currentPlayer.health -= enemyDmg;
+                _program.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+            }
+            // DEFEND ------------------------------------------------------------------------------------ DEFEND //
+            void Defend()
+            {
+                _program.PlaySoundEffect("defend");
+                int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
+                if (enemyDmg < 0)
+                    enemyDmg = 0;
+                int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) / 2;
+                enemyHealth -= playerDmg;
+                Program.currentPlayer.health -= enemyDmg;
+                _program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+            }
+            // RUN ------------------------------------------------------------------------------------------ RUN //
+            void Run()
+            {
+                // Player fails to run away
+                if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && _rand.Next(0, 2) == 0)
                 {
-                    _program.PlaySoundEffect("attack");
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
-                    int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) + _rand.Next(1, 4) +
-                        ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
-                    enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    _program.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    _program.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
                 }
-                    // DEFEND ------------------------------------------------------------------------------------ DEFEND //
-                else if (input.ToLower() == "d" || input.ToLower() == "defend")
+                // Player runs away
+                else
                 {
-                    _program.PlaySoundEffect("defend");
-                    int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
+                    var _shop = new Shop();
+                    _program.PlaySoundEffect("run-away");
+                    _program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
+                    _shop.LoadShop(Program.currentPlayer);
+                }
+            }
+            // HEAL ---------------------------------------------------------------------------------------- HEAL //
+            void Heal()
+            {
+                // Player has no potions left //
+                if (Program.currentPlayer.potions == 0)
+                {
+                    int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
-                    int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) / 2;
-                    enemyHealth -= playerDmg;
-                    Program.currentPlayer.health -= enemyDmg;
-                    _program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    _program.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                 }
-                    // RUN ------------------------------------------------------------------------------------------ RUN //
-                else if (input.ToLower() == "r" || input.ToLower() == "run")
+                // Player has potion //
+                else
                 {
-                    // Player fails to run away
-                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && _rand.Next(0, 2) == 0)
-                    {
-                        int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
-                        if (enemyDmg < 0)
-                            enemyDmg = 0;
-                        Program.currentPlayer.health -= enemyDmg;
-                        _program.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
-                    }
-                    // Player runs away
-                    else
-                    {
-                        var _shop = new Shop();
-                        _program.PlaySoundEffect("run-away");
-                        _program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
-                        _shop.LoadShop(Program.currentPlayer);
-                    }
+                    int potionValue = Program.currentPlayer.GetHeal();
+                    potionValue += (Program.currentPlayer.currentClass == Player.PlayerClass.Cleric ? potionValue : 0);
+                    int enemyDmg = enemyPower / 2 - Program.currentPlayer.armorValue;
+                    if (enemyDmg < 0)
+                        enemyDmg = 0;
+                    Program.currentPlayer.health += potionValue;
+                    Program.currentPlayer.potions--;
+                    _program.PlaySoundEffect("drink");
+                    _program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                 }
-                    // HEAL ---------------------------------------------------------------------------------------- HEAL //
-                else if (input.ToLower() == "h" || input.ToLower() == "heal")
-                {
-                    // Player has no potions left //
-                    if (Program.currentPlayer.potions == 0)
-                    {
-                        int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
-                        if (enemyDmg < 0)
-                            enemyDmg = 0;
-                        _program.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
-                    }
-                    // Player has potion //
-                    else
-                    {
-                        int potionValue = Program.currentPlayer.GetHeal();
-                        potionValue += (Program.currentPlayer.currentClass == Player.PlayerClass.Cleric ? potionValue : 0);
-                        int enemyDmg = enemyPower / 2 - Program.currentPlayer.armorValue;
-                        if (enemyDmg < 0)
-                            enemyDmg = 0;
-                        Program.currentPlayer.health += potionValue;
-                        Program.currentPlayer.potions--;
-                        _program.PlaySoundEffect("drink");
-                        _program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
-                    }
-                }
-
-                    // Player dies //
-                if (Program.currentPlayer.health <= 0)
-                {
-                    Program.currentPlayer.playerDeath($"\nYou were slain by {enemyName}");
-                }
-                Console.ReadKey();
             }
-            // Player wins combat //
-            int coins = Program.currentPlayer.GetCoins();
-            int experience = Program.currentPlayer.GetXP();
-
-            _program.PlaySoundEffect("enemy-death");
-            _program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
-            Program.currentPlayer.coins += coins;
-            Program.currentPlayer.xp += experience;
-            if (Program.currentPlayer.CanLevelUp())
-            {
-                Program.currentPlayer.LevelUp();
-            }
-            Console.ReadKey();
-            _encounter.RandomEncounter();
-
         }
 
     }
