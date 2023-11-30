@@ -1,10 +1,4 @@
-﻿using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Trollhall
 {
@@ -12,6 +6,7 @@ namespace Trollhall
     public class Player
     {
         private Random rand = new Random();
+        private Program _program = new Program();
 
         public string name = "Bomli Bronzebottom";
         public int id;
@@ -80,17 +75,17 @@ namespace Trollhall
                 xp -= GetLevelUpValue();
                 level++;
             }
-            Program.PlaySoundEffect("level-up");
+            _program.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Program.Print(false, $"You gained a level!\nYou're level is now {level}.");
+            _program.Print(false, $"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
         }
 
         public void playerDeath(string deathMessage)
         {
-            Program.PlaySoundEffect("player-death");
+            _program.PlaySoundEffect("player-death");
             Console.ForegroundColor = ConsoleColor.Red;
-            Program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
+            _program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
             Console.ResetColor();
             System.Environment.Exit(0);
         }

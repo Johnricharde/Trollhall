@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using System.IO;
-using System.Text.Json;
+﻿
 using NAudio.Wave;
 using System.Media;
-using System.Runtime.InteropServices;
 using Newtonsoft.Json;
 
 namespace Trollhall
@@ -21,6 +13,13 @@ namespace Trollhall
         // Main() ------------------------------------------------------------------------------------------------------- Main() //
         static void Main(string[] args)
         {
+            var _program = new Program();
+            _program.Start();
+        }
+        // Start() ----------------------------------------------------------------------------------------------------- Start() //
+        public void Start()
+        {
+            var _encounter = new Encounters();
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
             backgroundMusic.PlayLooping();
 
@@ -30,14 +29,14 @@ namespace Trollhall
             }
             currentPlayer = Load(out bool isNewPlayer);
             if (isNewPlayer)
-                Encounters.FirstEncounter();
+                _encounter.FirstEncounter();
             while (mainLoop)
             {
-                Encounters.RandomEncounter();
+                _encounter.RandomEncounter();
             }
         }
         // NewStart() ----------------------------------------------------------------------------------------------- NewStart() //
-        static Player NewStart(int id)
+        Player NewStart(int id)
         {
             Console.Clear();
             Player player = new Player();
@@ -72,13 +71,13 @@ namespace Trollhall
             return player;
         }
         // Quit() ------------------------------------------------------------------------------------------------------- Quit() //
-        public static void Quit()
+        public void Quit()
         {
             Save(currentPlayer.name);
             Environment.Exit(0);
         }
         // Save() ------------------------------------------------------------------------------------------------------- Save() //
-        public static void Save(string saveFileName)
+        public void Save(string saveFileName)
         {
             if (currentPlayer == null)
             {
@@ -94,7 +93,7 @@ namespace Trollhall
             Console.WriteLine("Player data saved successfully.");
         }
         // Load() ------------------------------------------------------------------------------------------------------- Load() //
-        public static Player Load(out bool isNewPlayer)
+        public Player Load(out bool isNewPlayer)
         {
             isNewPlayer = false;
             Console.Clear();
@@ -155,7 +154,7 @@ namespace Trollhall
             }
         }
         // DeleteCharacter() --------------------------------------------------------------------------------- DeleteCharacter() //
-        private static void DeleteCharacter(List<Player> players)
+        private void DeleteCharacter(List<Player> players)
         {
             Print(false, "Which character do you want to delete?");
             int idToDelete;
@@ -193,7 +192,7 @@ namespace Trollhall
         }
         // Print() ----------------------------------------------------------------------------------------------------- Print() //
         // Basically just Console.Write() but with a delay and sound effect //
-        public static void Print(bool waitForInput, string text, int speed = 1)
+        public void Print(bool waitForInput, string text, int speed = 1)
         {
             WaveOutEvent typing = new WaveOutEvent();
             typing.Init(new AudioFileReader("./audio/typing.wav"));
@@ -212,7 +211,7 @@ namespace Trollhall
             }
         }
         // ExperienceBar() ------------------------------------------------------------------------------------- ExperienceBar() //
-        public static void ExperienceBar(string fillerChar, decimal value, int size)
+        public void ExperienceBar(string fillerChar, decimal value, int size)
         {
             int differentiator = (int)(value * size);
             for (int i = 0; i < size; i++) 
@@ -228,7 +227,7 @@ namespace Trollhall
             }
         }
         // PlaySoundEffect() --------------------------------------------------------------------------------- PlaySoundEffect() //
-        public static void PlaySoundEffect(string soundFile)
+        public void PlaySoundEffect(string soundFile)
         {
             WaveOutEvent sound = new WaveOutEvent();
             sound.Init(new AudioFileReader($"./audio/{soundFile}.wav"));

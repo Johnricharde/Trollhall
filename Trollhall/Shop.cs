@@ -1,25 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Trollhall
 {
     public class Shop
     {
-
-        public static void LoadShop(Player player)
+        public void LoadShop(Player player)
         {
-            RunShop(player);
+            var _shop = new Shop();
+            _shop.RunShop(player);
         }
-        public static void RunShop(Player player)
+        private void RunShop(Player player)
         {
             int weaponPrice;
             int armorPrice;
             int potionPrice;
             int difficultyPrice;
+
+            var _encounter = new Encounters();
+            var _program = new Program();  
 
             while (true)
             {
@@ -47,7 +45,7 @@ namespace Trollhall
                 Console.WriteLine($" Armor         Mod:  + {player.armorValue}");
                 Console.WriteLine($" Difficulty    Mod:  + {player.difficultyMod}");
                 Console.Write("|");
-                Program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
+                _program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {player.level}");
                 Console.WriteLine("===========================");
                 Console.WriteLine(" [E]xit shop");
@@ -64,28 +62,28 @@ namespace Trollhall
                 else if (input == "d" || input == "difficulty")
                     TryBuy("difficulty", difficultyPrice, player);
                 else if (input == "s" || input == "save")
-                    Program.Quit();
+                    _program.Quit();
                 else if (input == "e" || input == "exit")
-                    Encounters.RandomEncounter(); 
+                    _encounter.RandomEncounter(); 
             }
-        }
-        static void TryBuy(string item, int cost, Player player)
-        {
-            if(player.coins >= cost)
+            void TryBuy(string item, int cost, Player player)
             {
-                if (item == "weapon")
-                    player.weaponValue++;
-                else if (item == "armor")
-                    player.armorValue++;
-                else if (item == "potion")
-                    player.potions++;
-                else if (item == "difficulty")
-                    player.difficultyMod++;
-                player.coins -= cost;
-            }
-            else
-            {
-                Program.Print(true, "You don't have enough gold!");
+                if(player.coins >= cost)
+                {
+                    if (item == "weapon")
+                        player.weaponValue++;
+                    else if (item == "armor")
+                        player.armorValue++;
+                    else if (item == "potion")
+                        player.potions++;
+                    else if (item == "difficulty")
+                        player.difficultyMod++;
+                    player.coins -= cost;
+                }
+                else
+                {
+                    _program.Print(true, "You don't have enough gold!");
+                }
             }
         }
 

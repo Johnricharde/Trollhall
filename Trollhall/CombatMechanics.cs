@@ -1,25 +1,20 @@
-﻿using NAudio.Codecs;
-using NAudio.Wave;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace Trollhall
 {
     internal class CombatMechanics
     {
-        private static Random rand = new Random();
-        public static void Combat(bool random, string name, int power, int health)
+        private Random rand = new Random();
+        Encounters _encounter = new Encounters();
+        Program _program = new Program();
+        public void Combat(bool random, string name, int power, int health)
         {
             string enemyName = "";
             int enemyPower = 0;
             int enemyHealth = 0;
             if (random)
             {
-                enemyName = Encounters.GetRandomName();
+                enemyName = _encounter.GetRandomName();
                 enemyPower = Program.currentPlayer.GetPower();
                 enemyHealth = Program.currentPlayer.GetHealth();
             }
@@ -40,7 +35,7 @@ namespace Trollhall
                 Console.WriteLine(" | [R]un    | [H]eal   |");
                 Console.WriteLine(" =======================");
                 Console.Write("|");
-                Program.ExperienceBar("▓", ((decimal)Program.currentPlayer.xp / (decimal)Program.currentPlayer.GetLevelUpValue()), 25);
+                _program.ExperienceBar("▓", ((decimal)Program.currentPlayer.xp / (decimal)Program.currentPlayer.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {Program.currentPlayer.level}\n");
                 Console.WriteLine($" PLAYER:  {Program.currentPlayer.name.ToUpper()}");
                 Console.Write(" Health:  ");
@@ -60,7 +55,7 @@ namespace Trollhall
                     // ATTACK ------------------------------------------------------------------------------------ ATTACK //
                 if (input.ToLower() == "a" || input.ToLower() == "attack")
                 {
-                    Program.PlaySoundEffect("attack");
+                    _program.PlaySoundEffect("attack");
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
@@ -68,19 +63,19 @@ namespace Trollhall
                         ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    _program.Print(false, $"You attack the {enemyName}, it strikes back!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                     // DEFEND ------------------------------------------------------------------------------------ DEFEND //
                 else if (input.ToLower() == "d" || input.ToLower() == "defend")
                 {
-                    Program.PlaySoundEffect("defend");
+                    _program.PlaySoundEffect("defend");
                     int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
                     int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
-                    Program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
+                    _program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
                 }
                     // RUN ------------------------------------------------------------------------------------------ RUN //
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
@@ -92,14 +87,15 @@ namespace Trollhall
                         if (enemyDmg < 0)
                             enemyDmg = 0;
                         Program.currentPlayer.health -= enemyDmg;
-                        Program.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
+                        _program.Print(true, $"As you attempt to flee the {enemyName}, it's strikes you from behind!\nYou lose {enemyDmg} health and are unable to escape!");
                     }
                     // Player runs away
                     else
                     {
-                        Program.PlaySoundEffect("run-away");
-                        Program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
-                        Shop.LoadShop(Program.currentPlayer);
+                        var _shop = new Shop();
+                        _program.PlaySoundEffect("run-away");
+                        _program.Print(true, $"You evade the {enemyName}'s attack and manage to escape!");
+                        _shop.LoadShop(Program.currentPlayer);
                     }
                 }
                     // HEAL ---------------------------------------------------------------------------------------- HEAL //
@@ -111,7 +107,7 @@ namespace Trollhall
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)
                             enemyDmg = 0;
-                        Program.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
+                        _program.Print(false, "You have no potions left!\nThe {enemyName} strikes at you! Dealing {enemyDmg} damage!");
                     }
                     // Player has potion //
                     else
@@ -123,8 +119,8 @@ namespace Trollhall
                             enemyDmg = 0;
                         Program.currentPlayer.health += potionValue;
                         Program.currentPlayer.potions--;
-                        Program.PlaySoundEffect("drink");
-                        Program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
+                        _program.PlaySoundEffect("drink");
+                        _program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                     }
                 }
 
@@ -139,8 +135,8 @@ namespace Trollhall
             int coins = Program.currentPlayer.GetCoins();
             int experience = Program.currentPlayer.GetXP();
 
-            Program.PlaySoundEffect("enemy-death");
-            Program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
+            _program.PlaySoundEffect("enemy-death");
+            _program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
             Program.currentPlayer.coins += coins;
             Program.currentPlayer.xp += experience;
             if (Program.currentPlayer.CanLevelUp())
@@ -148,7 +144,7 @@ namespace Trollhall
                 Program.currentPlayer.LevelUp();
             }
             Console.ReadKey();
-            Encounters.RandomEncounter();
+            _encounter.RandomEncounter();
 
         }
 
