@@ -11,34 +11,34 @@ namespace Trollhall
         }
         private void RunShop(Player player)
         {
-            int weaponPrice;
-            int armorPrice;
-            int potionPrice;
-            int difficultyPrice;
+            int _weaponPrice;
+            int _armorPrice;
+            int _potionPrice;
+            int _difficultyPrice;
 
             var _encounter = new Encounters();
             var _program = new Program();  
 
             while (true)
             {
-                weaponPrice = 100 * player.weaponValue;
-                armorPrice = 100 * (player.armorValue + 1);
-                potionPrice = 20 + 10 * player.difficultyMod;
-                difficultyPrice = 300 + 100 * player.difficultyMod;
+                _weaponPrice = 100 * player.weaponValue;
+                _armorPrice = 100 * (player.armorValue + 1);
+                _potionPrice = 20 + 10 * player.difficultyMod;
+                _difficultyPrice = 300 + 100 * player.difficultyMod;
 
                 Console.Clear();
                 Console.WriteLine("===========================");
                 Console.WriteLine("       VILLAGE SHOP        ");
                 Console.WriteLine("===========================");
                 Console.WriteLine($"        GOLD: £{player.coins}\n");
-                Console.WriteLine($" [W]eapon:             {weaponPrice}");
-                Console.WriteLine($" [A]rmor:              {armorPrice}");
-                Console.WriteLine($" [P]otion:             {potionPrice}");
-                Console.WriteLine($" [D]ifficulty:         {difficultyPrice}");
+                Console.WriteLine($" [W]eapon:             {_weaponPrice}");
+                Console.WriteLine($" [A]rmor:              {_armorPrice}");
+                Console.WriteLine($" [P]otion:             {_potionPrice}");
+                Console.WriteLine($" [D]ifficulty:         {_difficultyPrice}");
                 Console.WriteLine("===========================");
                 Console.WriteLine("       PLAYER STATS        ");
                 Console.WriteLine("===========================");
-                Console.WriteLine($" NAME: {player.name} the {player.currentClass}\n");
+                Console.WriteLine($" NAME: {player._name} the {player.currentClass}\n");
                 Console.WriteLine($" Health:           {player.health}/{player.maxHealth}");
                 Console.WriteLine($" Potions:          {player.potions}\n");
                 Console.WriteLine($" Weapon        Mod:  + {player.weaponValue - 1}");
@@ -51,19 +51,19 @@ namespace Trollhall
                 Console.WriteLine(" [E]xit shop");
                 Console.WriteLine(" [S]ave and quit");
 
-                string input = Console.ReadLine().ToLower();
+                string _input = Console.ReadLine().ToLower();
 
-                if (input == "w" || input == "weapon")
-                    TryBuy("weapon", weaponPrice, player);
-                else if (input == "a" || input == "armor")
-                    TryBuy("armor", armorPrice, player);
-                else if (input == "p" || input == "potion")
-                    TryBuy("potion", potionPrice, player);
-                else if (input == "d" || input == "difficulty")
-                    TryBuy("difficulty", difficultyPrice, player);
-                else if (input == "s" || input == "save")
+                if (_input == "w" || _input == "weapon")
+                    TryBuy("weapon", _weaponPrice, player);
+                else if (_input == "a" || _input == "armor")
+                    TryBuy("armor", _armorPrice, player);
+                else if (_input == "p" || _input == "potion")
+                    TryBuy("potion", _potionPrice, player);
+                else if (_input == "d" || _input == "difficulty")
+                    TryBuy("difficulty", _difficultyPrice, player);
+                else if (_input == "s" || _input == "save")
                     _program.Quit();
-                else if (input == "e" || input == "exit")
+                else if (_input == "e" || _input == "exit")
                     _encounter.RandomEncounter(); 
             }
             void TryBuy(string item, int cost, Player player)

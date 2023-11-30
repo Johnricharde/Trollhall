@@ -8,7 +8,6 @@ namespace Trollhall
     public class Program
     {
         public static Player currentPlayer = new Player();
-        public static bool mainLoop = true;
 
         // Main() ------------------------------------------------------------------------------------------------------- Main() //
         static void Main(string[] args)
@@ -30,6 +29,7 @@ namespace Trollhall
             currentPlayer = Load(out bool isNewPlayer);
             if (isNewPlayer)
                 _encounter.FirstEncounter();
+            bool mainLoop = true;
             while (mainLoop)
             {
                 _encounter.RandomEncounter();
@@ -41,10 +41,10 @@ namespace Trollhall
             Console.Clear();
             Player player = new Player();
             Print(false, "Enter your name:");
-            player.name = Console.ReadLine();
+            player._name = Console.ReadLine();
             player.id = id;
-            while (player.name == "")
-                player.name = Console.ReadLine();
+            while (player._name == "")
+                player._name = Console.ReadLine();
             Print(false, "Choose a class:\n [W]arriors boast great strength\n [R]angers are quick on their feet\n [C]lerics recieve great blessings");
             bool flag = false;
             while (!flag)
@@ -65,7 +65,7 @@ namespace Trollhall
                 
             }
             Console.Clear();
-            Print(true, $"You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player.name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
+            Print(true, $"You are at the entrance to the Halls of Trollhall.\nYour adventure begins...\nYour name is {player._name}\nand you're a proud dwarf of the fallen city of Trollhall.\nThe dwarven King Thorim is criticised for not doing more to reclaim these halls.\nAnd so the burden falls to lone dwarves like yourself.");
             Console.Clear();
             Print(false, "You encounter a troll!");
             return player;
@@ -73,7 +73,7 @@ namespace Trollhall
         // Quit() ------------------------------------------------------------------------------------------------------- Quit() //
         public void Quit()
         {
-            Save(currentPlayer.name);
+            Save(currentPlayer._name);
             Environment.Exit(0);
         }
         // Save() ------------------------------------------------------------------------------------------------------- Save() //
@@ -118,7 +118,7 @@ namespace Trollhall
 
                 foreach (Player player in players)
                 {
-                    Print(false, $" [{player.id + 1}] {player.name} the {player.currentClass}");
+                    Print(false, $" [{player.id + 1}] {player._name} the {player.currentClass}");
                 }
                 Console.WriteLine();
                 Print(false, " [C]reate a new character\n [D]elete a character\n");
@@ -165,14 +165,14 @@ namespace Trollhall
 
                 if (playerToDelete != null)
                 {
-                    Print(false, $"Are you sure you want to delete {playerToDelete.name} the {playerToDelete.currentClass}? [y/n]");
+                    Print(false, $"Are you sure you want to delete {playerToDelete._name} the {playerToDelete.currentClass}? [y/n]");
                     string confirmation = Console.ReadLine().ToLower();
 
                     if (confirmation == "y" || confirmation == "yes")
                     {
-                        string pathToDelete = $"saves/{playerToDelete.name}.json";
+                        string pathToDelete = $"saves/{playerToDelete._name}.json";
                         File.Delete(pathToDelete);
-                        Print(false, $"Player {playerToDelete.name} deleted successfully.");
+                        Print(false, $"Player {playerToDelete._name} deleted successfully.");
                         Load(out bool isNewPlayer);
                     }
                     else

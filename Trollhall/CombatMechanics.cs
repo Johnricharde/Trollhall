@@ -4,7 +4,7 @@ namespace Trollhall
 {
     internal class CombatMechanics
     {
-        private Random rand = new Random();
+        private Random _rand = new Random();
         Encounters _encounter = new Encounters();
         Program _program = new Program();
         public void Combat(bool random, string name, int power, int health)
@@ -37,7 +37,7 @@ namespace Trollhall
                 Console.Write("|");
                 _program.ExperienceBar("▓", ((decimal)Program.currentPlayer.xp / (decimal)Program.currentPlayer.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {Program.currentPlayer.level}\n");
-                Console.WriteLine($" PLAYER:  {Program.currentPlayer.name.ToUpper()}");
+                Console.WriteLine($" PLAYER:  {Program.currentPlayer._name.ToUpper()}");
                 Console.Write(" Health:  ");
                 if ((float)Program.currentPlayer.health / Program.currentPlayer.maxHealth <= 0.25)
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -59,7 +59,7 @@ namespace Trollhall
                     int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
-                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) + rand.Next(1, 4) +
+                    int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) + _rand.Next(1, 4) +
                         ((Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 2 : 0);
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
@@ -72,7 +72,7 @@ namespace Trollhall
                     int enemyDmg = (enemyPower / 4) - Program.currentPlayer.armorValue;
                     if (enemyDmg < 0)
                         enemyDmg = 0;
-                    int playerDmg = rand.Next(0, Program.currentPlayer.weaponValue) / 2;
+                    int playerDmg = _rand.Next(0, Program.currentPlayer.weaponValue) / 2;
                     enemyHealth -= playerDmg;
                     Program.currentPlayer.health -= enemyDmg;
                     _program.Print(false, $"As the {enemyName} prepares to strike, you hunker behind your shield!\nYou take {enemyDmg} damage and you deal {playerDmg} damage");
@@ -81,7 +81,7 @@ namespace Trollhall
                 else if (input.ToLower() == "r" || input.ToLower() == "run")
                 {
                     // Player fails to run away
-                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && rand.Next(0, 2) == 0)
+                    if (Program.currentPlayer.currentClass != Player.PlayerClass.Ranger && _rand.Next(0, 2) == 0)
                     {
                         int enemyDmg = enemyPower - Program.currentPlayer.armorValue;
                         if (enemyDmg < 0)

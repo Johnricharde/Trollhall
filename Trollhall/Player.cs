@@ -8,7 +8,7 @@ namespace Trollhall
         private Random rand = new Random();
         private Program _program = new Program();
 
-        public string name = "Bomli Bronzebottom";
+        public string _name = "Bomli Bronzebottom";
         public int id;
         public int coins = 9999;
         public int level = 1;
@@ -26,35 +26,35 @@ namespace Trollhall
 
         public int GetHeal()
         {
-            int staticHealAmount = 2 * difficultyMod + 5;
-            int maxHealAmount = maxHealth - health;
-            int healAmount = Math.Min(staticHealAmount, maxHealAmount);
-            return healAmount;
+            int _staticHealAmount = 2 * difficultyMod + 5;
+            int _maxHealAmount = maxHealth - health;
+            int _healAmount = Math.Min(_staticHealAmount, _maxHealAmount);
+            return _healAmount;
         }
         public int GetHealth()
         {
-            int upper = (2 * difficultyMod + 5);
-            int lower = (difficultyMod + 2);
-            return rand.Next(lower, upper);
+            int _upper = (2 * difficultyMod + 5);
+            int _lower = (difficultyMod + 2);
+            return rand.Next(_lower, _upper);
         }
         public int GetPower()
         {
-            int upper = (2 * difficultyMod + 2);
-            int lower = (difficultyMod + 1);
-            return rand.Next(lower, upper);
+            int _upper = (2 * difficultyMod + 2);
+            int _lower = (difficultyMod + 1);
+            return rand.Next(_lower, _upper);
         }
         public int GetCoins()
         {
-            int upper = (15 * difficultyMod + 50);
-            int lower = (10 * difficultyMod + 10);
-            return rand.Next(lower, upper);
+            int _upper = (15 * difficultyMod + 50);
+            int _lower = (10 * difficultyMod + 10);
+            return rand.Next(_lower, _upper);
         }
 
         public int GetXP()
         {
-            int upper = (20 * difficultyMod + 50);
-            int lower = (15 * difficultyMod + 10);
-            return rand.Next(lower, upper);
+            int _upper = (20 * difficultyMod + 50);
+            int _lower = (15 * difficultyMod + 10);
+            return rand.Next(_lower, _upper);
         }
         public int GetLevelUpValue()
         {

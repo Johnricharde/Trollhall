@@ -4,13 +4,13 @@ namespace Trollhall
 {
     public class Encounters
     {
-        private Random rand = new Random();
+        private Random _rand = new Random();
         private Program _program = new Program();
 
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         public void RandomEncounter()
         {
-            switch (rand.Next(1, 15))
+            switch (_rand.Next(1, 15))
             {
                 case 0:
                     TrollBehemothEncounter();
@@ -37,7 +37,7 @@ namespace Trollhall
         }
         public string GetRandomName()
         {
-            switch (rand.Next(0, 5))
+            switch (_rand.Next(0, 5))
             {
                 case 0:
                     return "Rock Spider";
@@ -131,7 +131,7 @@ namespace Trollhall
             {
                 case "1":
                     _program.Print(true, "You carefully examine the dwarven puzzle,\nanalyzing the symbols and their arrangement.\n");
-                    if (rand.Next(0, 2) == 0)
+                    if (_rand.Next(0, 2) == 0)
                     {
                         _program.Print(true, "After some thought,\nyou successfully decipher the pattern and unlock the passage.");
                         SolvedPuzzle();
@@ -142,7 +142,7 @@ namespace Trollhall
 
                 case "2":
                     _program.Print(true, "You decide to take a more direct approach and\nattempt to brute force the puzzle with you strength.\n");
-                    if (rand.Next(0, (Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 4 : 2) == 0)
+                    if (_rand.Next(0, (Program.currentPlayer.currentClass == Player.PlayerClass.Warrior) ? 4 : 2) == 0)
                     {
                         _program.Print(true, "Through trial and error,\nyou manage to brute force the puzzle and unlock the passage.");
                         SolvedPuzzle();
