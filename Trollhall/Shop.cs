@@ -17,7 +17,7 @@ namespace Trollhall
             int _difficultyPrice;
 
             var _encounter = new Encounters();
-            var _program = new Program();  
+            var _program   = new Program();  
 
             while (true)
             {

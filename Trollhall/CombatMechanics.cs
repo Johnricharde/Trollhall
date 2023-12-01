@@ -4,24 +4,24 @@ namespace Trollhall
 {
     internal class CombatMechanics
     {
-        private Random _rand = new Random();
-        Encounters _encounter = new Encounters();
-        Program _program = new Program();
+        private readonly Random     _rand      = new();
+        private readonly Encounters _encounter = new();
+        private readonly Program    _program   = new();
         public void Combat(bool random, string name, int power, int health)
         {
-            string enemyName = "";
-            int enemyPower = 0;
-            int enemyHealth = 0;
+            string enemyName;
+            int enemyPower;
+            int enemyHealth;
             if (random)
             {
-                enemyName = _encounter.GetRandomName();
-                enemyPower = Program.currentPlayer.GetPower();
+                enemyName   = _encounter.GetRandomName();
+                enemyPower  = Program.currentPlayer.GetPower();
                 enemyHealth = Program.currentPlayer.GetHealth();
             }
             else
             {
-                enemyName = name;
-                enemyPower = power;
+                enemyName   = name;
+                enemyPower  = power;
                 enemyHealth = health;
             }
             while (enemyHealth > 0)

@@ -5,21 +5,26 @@ namespace Trollhall
     [Serializable]
     public class Player
     {
-        private Random _rand = new Random();
-        private Program _program = new Program();
+        private readonly Random  _rand    = new();
+        private readonly Program _program = new();
 
         // PLAYER STATS ------------------------------------------------------------------------ PLAYER STATS //
         public string _name = "Bomli Bronzebottom";
         public int id;
-        public int coins = 9999;
+
+        public int xp    = 0;
         public int level = 1;
-        public int xp = 0;
-        public int health = 10;
+
+        public int damage    = 1;
+        public int health    = 10;
         public int maxHealth = 10;
-        public int damage = 1;
-        public int armorValue = 0;
-        public int potions = 5;
+
+        public int armorValue  = 0;
         public int weaponValue = 1;
+
+        public int coins   = 0;
+        public int potions = 5;
+
         public int difficultyMod = 0;
 
         // PLAYER CLASSES -------------------------------------------------------------------- PLAYER CLASSES //

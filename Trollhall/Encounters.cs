@@ -4,8 +4,8 @@ namespace Trollhall
 {
     public class Encounters
     {
-        private Random _rand = new Random();
-        private Program _program = new Program();
+        private Random  _rand    = new();
+        private Program _program = new();
 
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
         // Gets a random encounter //
@@ -32,7 +32,7 @@ namespace Trollhall
                     BlacksmithEncounter();
                     break;
                 default:
-                    basicFightEncounter();
+                    BasicFightEncounter();
                     break;
             }
         }
@@ -120,7 +120,7 @@ namespace Trollhall
             RandomEncounter();
         }
 
-        // Riddle Encounters -------------------------------------------------------------------------- Riddle Encounters //
+        // Puzzle Encounters -------------------------------------------------------------------------- Puzzle Encounters //
         private void DwarvenPuzzleEncounter()
         {
             Console.Clear();
@@ -235,7 +235,7 @@ namespace Trollhall
             _program.Print(true, "A troll behemoth has found you!\nIt looms over you, thrice your size.\nThese monstrosities were the backbone of the troll invasion force\nthat reclaimed the Trollhalls...\n\nIt might be wise to run...");
             _combatMechanics.Combat(false, "Troll Behemoth", (5 * Program.currentPlayer.difficultyMod), 100);
         }
-        private void basicFightEncounter()
+        private void BasicFightEncounter()
         {
             var _combatMechanics = new CombatMechanics();
             Console.Clear();

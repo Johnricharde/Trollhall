@@ -19,6 +19,7 @@ namespace Trollhall
         public void StartGame()
         {
             var _encounter = new Encounters();
+
             SoundPlayer backgroundMusic = new SoundPlayer("./audio/background-music.wav");
             backgroundMusic.PlayLooping();
 
