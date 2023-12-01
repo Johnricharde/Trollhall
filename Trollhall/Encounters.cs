@@ -8,6 +8,7 @@ namespace Trollhall
         private Program _program = new Program();
 
         // ENCOUNTER TOOLS ------------------------------------------------------------------------------ ENCOUNTER TOOLS //
+        // Gets a random encounter //
         public void RandomEncounter()
         {
             switch (_rand.Next(1, 50))
@@ -35,6 +36,7 @@ namespace Trollhall
                     break;
             }
         }
+        // Gets a name for generic and random enemy //
         public string GetRandomName()
         {
             switch (_rand.Next(0, 5))

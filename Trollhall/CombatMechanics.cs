@@ -26,40 +26,22 @@ namespace Trollhall
             }
             while (enemyHealth > 0)
             {
-                Console.Clear();
-
                 ShowCombatUI();
-
-
                 ChooseAction();
-
-                // Player dies //
-                if (Program.currentPlayer.health <= 0)
-                {
-                    Program.currentPlayer.playerDeath($"\nYou were slain by {enemyName}");
-                }
-                Console.ReadKey();
+                PlayerLosesCombat();
             }
-            // Player wins combat //
-            int coins = Program.currentPlayer.GetCoins();
-            int experience = Program.currentPlayer.GetXP();
+            PlayerWinsCombat();
 
-            _program.PlaySoundEffect("enemy-death");
-            _program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
-            Program.currentPlayer.coins += coins;
-            Program.currentPlayer.xp += experience;
-            if (Program.currentPlayer.CanLevelUp())
-            {
-                Program.currentPlayer.LevelUp();
-            }
-            Console.ReadKey();
-            _encounter.RandomEncounter();
+
 
             // COMBAT UI ------------------------------------------------------------------------------ COMBAT UI //
             void ShowCombatUI()
             {
+                // Enemy Stats //
+                Console.Clear();
                 Console.WriteLine($" ENEMY: {enemyName.ToUpper()}");
                 Console.WriteLine($" Power: {enemyPower} / Health: {enemyHealth}\n");
+
                 Console.WriteLine(" =======================");
                 Console.WriteLine(" | [A]ttack | [D]efend |");
                 Console.WriteLine(" | [R]un    | [H]eal   |");
@@ -68,6 +50,8 @@ namespace Trollhall
                 _program.ExperienceBar("▓", ((decimal)Program.currentPlayer.xp / (decimal)Program.currentPlayer.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {Program.currentPlayer.level}\n");
                 Console.WriteLine($" PLAYER:  {Program.currentPlayer._name.ToUpper()}");
+
+                // Health //
                 Console.Write(" Health:  ");
                 if ((float)Program.currentPlayer.health / Program.currentPlayer.maxHealth <= 0.25)
                     Console.ForegroundColor = ConsoleColor.Red;
@@ -76,6 +60,8 @@ namespace Trollhall
                 Console.Write($"{Program.currentPlayer.health}");
                 Console.ResetColor();
                 Console.WriteLine($"/{Program.currentPlayer.maxHealth}");
+
+                // Potions //
                 if (Program.currentPlayer.potions <= 0)
                     Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($" Potions: {Program.currentPlayer.potions}");
@@ -168,6 +154,32 @@ namespace Trollhall
                     _program.PlaySoundEffect("drink");
                     _program.Print(false, $"You drink a potion! You recover {potionValue} health!\nThe {enemyName} strikes! Dealing {enemyDmg} damage!");
                 }
+            }
+            // PLAYER LOSES COMBAT ------------------------------------------------------------ PLAYER LOSES COMBAT //
+            void PlayerLosesCombat()
+            {
+                if (Program.currentPlayer.health <= 0)
+                {
+                    Program.currentPlayer.playerDeath($"\nYou were slain by {enemyName}");
+                }
+                Console.ReadKey();
+            }
+            // PLAYER WINS COMBAT ------------------------------------------------------------ PLAYER WINS COMBAT //
+            void PlayerWinsCombat()
+            {
+                int coins = Program.currentPlayer.GetCoins();
+                int experience = Program.currentPlayer.GetXP();
+
+                _program.PlaySoundEffect("enemy-death");
+                _program.Print(false, $"You defeat the {enemyName}!\nYou loot {coins} coins!\nYou recieve {experience} experience!");
+                Program.currentPlayer.coins += coins;
+                Program.currentPlayer.xp += experience;
+                if (Program.currentPlayer.CanLevelUp())
+                {
+                    Program.currentPlayer.LevelUp();
+                }
+                Console.ReadKey();
+                _encounter.RandomEncounter();
             }
         }
 

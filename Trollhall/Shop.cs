@@ -21,30 +21,21 @@ namespace Trollhall
 
             while (true)
             {
+                ShowShop();
+
+                ChooseItem();
+            }
+
+
+
+            // SHOW SHOP UI ------------------------------------------------------------------------ SHOW SHOP UI //
+            void ShowShop()
+            {
                 _weaponPrice = 100 * player.weaponValue;
                 _armorPrice = 100 * (player.armorValue + 1);
                 _potionPrice = 20 + 10 * player.difficultyMod;
                 _difficultyPrice = 300 + 100 * player.difficultyMod;
 
-                ShowShop();
-
-                string _input = Console.ReadLine().ToLower();
-
-                if (_input == "w" || _input == "weapon")
-                    TryBuy("weapon", _weaponPrice, player);
-                else if (_input == "a" || _input == "armor")
-                    TryBuy("armor", _armorPrice, player);
-                else if (_input == "p" || _input == "potion")
-                    TryBuy("potion", _potionPrice, player);
-                else if (_input == "d" || _input == "difficulty")
-                    TryBuy("difficulty", _difficultyPrice, player);
-                else if (_input == "s" || _input == "save")
-                    _program.Quit();
-                else if (_input == "e" || _input == "exit")
-                    _encounter.RandomEncounter(); 
-            }
-            void ShowShop()
-            {
                 Console.Clear();
                 Console.WriteLine("===========================");
                 Console.WriteLine("       VILLAGE SHOP        ");
@@ -70,7 +61,26 @@ namespace Trollhall
                 Console.WriteLine(" [E]xit shop");
                 Console.WriteLine(" [S]ave and quit");
             }
-            void TryBuy(string item, int cost, Player player)
+            // CHOOSE ITEM -------------------------------------------------------------------------- CHOOSE ITEM //
+            void ChooseItem()
+            {
+                string _input = Console.ReadLine().ToLower();
+
+                if (_input == "w" || _input == "weapon")
+                    TryToBuy("weapon", _weaponPrice, player);
+                else if (_input == "a" || _input == "armor")
+                    TryToBuy("armor", _armorPrice, player);
+                else if (_input == "p" || _input == "potion")
+                    TryToBuy("potion", _potionPrice, player);
+                else if (_input == "d" || _input == "difficulty")
+                    TryToBuy("difficulty", _difficultyPrice, player);
+                else if (_input == "s" || _input == "save")
+                    _program.Quit();
+                else if (_input == "e" || _input == "exit")
+                    _encounter.RandomEncounter();
+            }
+            // TRY TO BUY ---------------------------------------------------------------------------- TRY TO BUY //
+            void TryToBuy(string item, int cost, Player player)
             {
                 if(player.coins >= cost)
                 {
