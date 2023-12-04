@@ -6,7 +6,7 @@ namespace Trollhall
     public class Player
     {
         private readonly Random  _rand    = new();
-        private readonly Program _program = new();
+        public Tools _tools = new();
 
         // PLAYER STATS ------------------------------------------------------------------------ PLAYER STATS //
         public string _name = "Bomli Bronzebottom";
@@ -92,18 +92,18 @@ namespace Trollhall
                 xp -= GetLevelUpValue();
                 level++;
             }
-            _program.PlaySoundEffect("level-up");
+            _tools.PlaySoundEffect("level-up");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            _program.Print(false, $"You gained a level!\nYou're level is now {level}.");
+            _tools.Print(false, $"You gained a level!\nYou're level is now {level}.");
             Console.ResetColor();
         }
 
         // PLAYER DEATH ------------------------------------------------------------------------ PLAYER DEATH //
         public void playerDeath(string deathMessage)
         {
-            _program.PlaySoundEffect("player-death");
+            _tools.PlaySoundEffect("player-death");
             Console.ForegroundColor = ConsoleColor.Red;
-            _program.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
+            _tools.Print(true, $"{deathMessage}\nYOU ARE DEAD...", 50);
             Console.ResetColor();
             System.Environment.Exit(0);
         }

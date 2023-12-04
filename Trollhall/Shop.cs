@@ -17,7 +17,8 @@ namespace Trollhall
             int _difficultyPrice;
 
             var _encounter = new Encounters();
-            var _program   = new Program();  
+            var _program   = new Program();
+            var _tools     = new Tools();
 
             while (true)
             {
@@ -55,7 +56,7 @@ namespace Trollhall
                 Console.WriteLine($" Armor         Mod:  + {player.armorValue}");
                 Console.WriteLine($" Difficulty    Mod:  + {player.difficultyMod}");
                 Console.Write("|");
-                _program.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
+                _tools.ExperienceBar("▓", ((decimal)player.xp / (decimal)player.GetLevelUpValue()), 25);
                 Console.WriteLine($"|Lvl: {player.level}");
                 Console.WriteLine("===========================");
                 Console.WriteLine(" [E]xit shop");
@@ -96,7 +97,7 @@ namespace Trollhall
                 }
                 else
                 {
-                    _program.Print(true, "You don't have enough gold!");
+                    _tools.Print(true, "You don't have enough gold!");
                 }
             }
         }
