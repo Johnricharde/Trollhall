@@ -124,34 +124,34 @@ namespace Trollhall
                 Console.WriteLine();
                 tools.Print(false, " [C]reate a new character\n [D]elete a character\n");
 
-                string userInput = Console.ReadLine().ToLower();
+                string? userInput = Console.ReadLine().ToLower();
 
-                    if (userInput == "c" || userInput == "create")
-                    {
-                        Player newPlayer = NewStart(idCount);
-                        isNewPlayer = true;
-                        idCount++;
-                        return newPlayer;
-                    }
-                    else if (userInput == "d" || userInput == "delete")
-                    {
-                    DeleteCharacter(players);
+                if (userInput == "c" || userInput == "create")
+                {
+                    Player newPlayer = NewStart(idCount);
+                    isNewPlayer = true;
+                    idCount++;
+                    return newPlayer;
+                }
+                else if (userInput == "d" || userInput == "delete")
+                {
+                DeleteCharacter(players);
                 }
                 else if (int.TryParse(userInput, out int id))
+                {
+                    foreach (Player player in players)
                     {
-                        foreach (Player player in players)
+                        if (player.id == id - 1)
                         {
-                            if (player.id == id - 1)
-                            {
-                                return player;
-                            }
+                            return player;
                         }
-                        tools.Print(true, "Couldn't find that id...");
                     }
-                    else
-                    {
-                        tools.Print(true, "Couldn't find that name...");
-                    }
+                    tools.Print(true, "Couldn't find that id...");
+                }
+                else
+                {
+                    tools.Print(true, "Couldn't find that name...");
+                }
             }
         }
         // DeleteCharacter() --------------------------------------------------------------------------------- DeleteCharacter() //
