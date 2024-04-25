@@ -13,6 +13,7 @@ You can pick one of three classes and buy upgrades etc.
 
 ### Acknowledgements:
 - This project is heavily influenced by EnderUnknown's youtube tutorial series: https://www.youtube.com/watch?v=EURyF4U5OKw&list=PL04Naussmr9dWEMfIDE9trydZQda897bc&ab_channel=EnderUnknown
+- However I've also taken alot of liberties. In addition there were also challenges in regards to the tutorial being out of date, so I've had to make adjustments here and there.
   
 
 ## MIT License
